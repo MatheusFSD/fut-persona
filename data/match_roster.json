@@ -1,0 +1,392 @@
+{
+  "partida": [
+    {
+      "time": "brasil",
+      "uniforme": "titular"
+    },
+    {
+      "time": "argentina",
+      "uniforme": "titular"
+    }
+  ],
+  "times": [
+    {
+      "id": "brasil",
+      "nome": "Brasil",
+      "sigla": "BRA",
+      "modelo": "hero",
+      "uniformes": [
+        {
+          "id": "titular",
+          "nome": "1 · Amarelo",
+          "camisa": "#f5cc28",
+          "short": "#163e9b",
+          "meiao": "#f6f4e7",
+          "camisa_goleiro": "#dd603b",
+          "short_goleiro": "#172833",
+          "meiao_goleiro": "#dd603b",
+          "detalhe": "#24814d",
+          "cor_secundaria": "#f5cc28",
+          "padrao": "liso"
+        },
+        {
+          "id": "reserva",
+          "nome": "2 · Azul",
+          "camisa": "#1749ad",
+          "short": "#f6f4e7",
+          "meiao": "#1749ad",
+          "camisa_goleiro": "#5eb387",
+          "short_goleiro": "#172833",
+          "meiao_goleiro": "#5eb387",
+          "detalhe": "#f6f4e7",
+          "cor_secundaria": "#1749ad",
+          "padrao": "liso"
+        }
+      ]
+    },
+    {
+      "id": "argentina",
+      "nome": "Argentina",
+      "sigla": "ARG",
+      "modelo": "enemy_a",
+      "uniformes": [
+        {
+          "id": "titular",
+          "nome": "1 · Branco e celeste",
+          "camisa": "#f5f5ee",
+          "short": "#182836",
+          "meiao": "#f5f5ee",
+          "camisa_goleiro": "#b55d9e",
+          "short_goleiro": "#172833",
+          "meiao_goleiro": "#b55d9e",
+          "detalhe": "#1b354d",
+          "cor_secundaria": "#6ec2e8",
+          "padrao": "listras_verticais"
+        },
+        {
+          "id": "reserva",
+          "nome": "2 · Azul-marinho",
+          "camisa": "#152f57",
+          "short": "#152f57",
+          "meiao": "#152f57",
+          "camisa_goleiro": "#e7a738",
+          "short_goleiro": "#172833",
+          "meiao_goleiro": "#e7a738",
+          "detalhe": "#79c9e9",
+          "cor_secundaria": "#448db6",
+          "padrao": "faixa_peito"
+        }
+      ]
+    },
+    {
+      "id": "alemanha",
+      "nome": "Alemanha",
+      "sigla": "ALE",
+      "modelo": "hero",
+      "uniformes": [
+        {
+          "id": "titular",
+          "nome": "1 · Branco e preto",
+          "camisa": "#f2f1e8",
+          "short": "#171c23",
+          "meiao": "#f2f1e8",
+          "camisa_goleiro": "#3b996a",
+          "short_goleiro": "#172833",
+          "meiao_goleiro": "#3b996a",
+          "detalhe": "#aa3039",
+          "cor_secundaria": "#20252c",
+          "padrao": "faixa_peito"
+        },
+        {
+          "id": "reserva",
+          "nome": "2 · Preto",
+          "camisa": "#1e242c",
+          "short": "#1e242c",
+          "meiao": "#1e242c",
+          "camisa_goleiro": "#ed963b",
+          "short_goleiro": "#172833",
+          "meiao_goleiro": "#ed963b",
+          "detalhe": "#dfb640",
+          "cor_secundaria": "#b82c3d",
+          "padrao": "faixa_peito"
+        }
+      ]
+    },
+    {
+      "id": "franca",
+      "nome": "França",
+      "sigla": "FRA",
+      "modelo": "enemy_a",
+      "uniformes": [
+        {
+          "id": "titular",
+          "nome": "1 · Azul",
+          "camisa": "#224b9c",
+          "short": "#f0f0e7",
+          "meiao": "#b43643",
+          "camisa_goleiro": "#e6a236",
+          "short_goleiro": "#172833",
+          "meiao_goleiro": "#e6a236",
+          "detalhe": "#e7e8dc",
+          "cor_secundaria": "#224b9c",
+          "padrao": "liso"
+        },
+        {
+          "id": "reserva",
+          "nome": "2 · Branco",
+          "camisa": "#f1f1e8",
+          "short": "#18376d",
+          "meiao": "#f1f1e8",
+          "camisa_goleiro": "#548d79",
+          "short_goleiro": "#172833",
+          "meiao_goleiro": "#548d79",
+          "detalhe": "#bd3549",
+          "cor_secundaria": "#214c96",
+          "padrao": "faixa_peito"
+        }
+      ]
+    }
+  ],
+  "jogadores": [
+    {
+      "id": "brasil_1",
+      "nome": "Lucas",
+      "tipo_corpo": "normal",
+      "cor_pele": 2,
+      "tipo_cabelo": "curto",
+      "cor_cabelo": "preto",
+      "time": "brasil",
+      "posicao": "goleiro",
+      "numero": 1,
+      "altura": 1.92
+    },
+    {
+      "id": "brasil_2",
+      "nome": "Caio",
+      "tipo_corpo": "magro",
+      "cor_pele": 0,
+      "tipo_cabelo": "raspado",
+      "cor_cabelo": "loiro",
+      "time": "brasil",
+      "posicao": "zagueiro",
+      "numero": 4,
+      "altura": 1.79
+    },
+    {
+      "id": "brasil_3",
+      "nome": "Nando",
+      "tipo_corpo": "parrudo",
+      "cor_pele": 3,
+      "tipo_cabelo": "careca",
+      "cor_cabelo": "preto",
+      "time": "brasil",
+      "posicao": "ala_esquerda",
+      "numero": 6,
+      "altura": 1.86
+    },
+    {
+      "id": "brasil_4",
+      "nome": "Davi",
+      "tipo_corpo": "magro",
+      "cor_pele": 4,
+      "tipo_cabelo": "cacheado",
+      "cor_cabelo": "preto",
+      "time": "brasil",
+      "posicao": "ala_direita",
+      "numero": 7,
+      "altura": 1.65
+    },
+    {
+      "id": "brasil_5",
+      "nome": "Beto",
+      "tipo_corpo": "parrudo",
+      "cor_pele": 1,
+      "tipo_cabelo": "moicano",
+      "cor_cabelo": "ruivo",
+      "time": "brasil",
+      "posicao": "atacante",
+      "numero": 9,
+      "altura": 1.72
+    },
+    {
+      "id": "argentina_1",
+      "nome": "Tomás",
+      "tipo_corpo": "normal",
+      "cor_pele": 0,
+      "tipo_cabelo": "raspado",
+      "cor_cabelo": "castanho",
+      "time": "argentina",
+      "posicao": "goleiro",
+      "numero": 1,
+      "altura": 1.89
+    },
+    {
+      "id": "argentina_2",
+      "nome": "Nicolás",
+      "tipo_corpo": "magro",
+      "cor_pele": 1,
+      "tipo_cabelo": "curto",
+      "cor_cabelo": "castanho",
+      "time": "argentina",
+      "posicao": "zagueiro",
+      "numero": 4,
+      "altura": 1.82
+    },
+    {
+      "id": "argentina_3",
+      "nome": "Bruno",
+      "tipo_corpo": "parrudo",
+      "cor_pele": 2,
+      "tipo_cabelo": "moicano",
+      "cor_cabelo": "loiro",
+      "time": "argentina",
+      "posicao": "ala_esquerda",
+      "numero": 6,
+      "altura": 1.88
+    },
+    {
+      "id": "argentina_4",
+      "nome": "Mateo",
+      "tipo_corpo": "magro",
+      "cor_pele": 3,
+      "tipo_cabelo": "careca",
+      "cor_cabelo": "preto",
+      "time": "argentina",
+      "posicao": "ala_direita",
+      "numero": 7,
+      "altura": 1.68
+    },
+    {
+      "id": "argentina_5",
+      "nome": "Santiago",
+      "tipo_corpo": "parrudo",
+      "cor_pele": 4,
+      "tipo_cabelo": "cacheado",
+      "cor_cabelo": "preto",
+      "time": "argentina",
+      "posicao": "atacante",
+      "numero": 9,
+      "altura": 1.74
+    },
+    {
+      "id": "alemanha_1",
+      "nome": "Lukas",
+      "tipo_corpo": "normal",
+      "cor_pele": 2,
+      "tipo_cabelo": "curto",
+      "cor_cabelo": "preto",
+      "time": "alemanha",
+      "posicao": "goleiro",
+      "numero": 1,
+      "altura": 1.96
+    },
+    {
+      "id": "alemanha_2",
+      "nome": "Felix",
+      "tipo_corpo": "magro",
+      "cor_pele": 0,
+      "tipo_cabelo": "raspado",
+      "cor_cabelo": "loiro",
+      "time": "alemanha",
+      "posicao": "zagueiro",
+      "numero": 4,
+      "altura": 1.84
+    },
+    {
+      "id": "alemanha_3",
+      "nome": "Jonas",
+      "tipo_corpo": "parrudo",
+      "cor_pele": 3,
+      "tipo_cabelo": "careca",
+      "cor_cabelo": "preto",
+      "time": "alemanha",
+      "posicao": "ala_esquerda",
+      "numero": 6,
+      "altura": 1.9
+    },
+    {
+      "id": "alemanha_4",
+      "nome": "Emil",
+      "tipo_corpo": "magro",
+      "cor_pele": 4,
+      "tipo_cabelo": "cacheado",
+      "cor_cabelo": "preto",
+      "time": "alemanha",
+      "posicao": "ala_direita",
+      "numero": 7,
+      "altura": 1.71
+    },
+    {
+      "id": "alemanha_5",
+      "nome": "Leon",
+      "tipo_corpo": "parrudo",
+      "cor_pele": 1,
+      "tipo_cabelo": "moicano",
+      "cor_cabelo": "ruivo",
+      "time": "alemanha",
+      "posicao": "atacante",
+      "numero": 9,
+      "altura": 1.77
+    },
+    {
+      "id": "franca_1",
+      "nome": "Hugo",
+      "tipo_corpo": "normal",
+      "cor_pele": 0,
+      "tipo_cabelo": "raspado",
+      "cor_cabelo": "castanho",
+      "time": "franca",
+      "posicao": "goleiro",
+      "numero": 1,
+      "altura": 1.94
+    },
+    {
+      "id": "franca_2",
+      "nome": "Louis",
+      "tipo_corpo": "magro",
+      "cor_pele": 1,
+      "tipo_cabelo": "curto",
+      "cor_cabelo": "castanho",
+      "time": "franca",
+      "posicao": "zagueiro",
+      "numero": 4,
+      "altura": 1.81
+    },
+    {
+      "id": "franca_3",
+      "nome": "Amadou",
+      "tipo_corpo": "parrudo",
+      "cor_pele": 2,
+      "tipo_cabelo": "moicano",
+      "cor_cabelo": "loiro",
+      "time": "franca",
+      "posicao": "ala_esquerda",
+      "numero": 6,
+      "altura": 1.87
+    },
+    {
+      "id": "franca_4",
+      "nome": "Noé",
+      "tipo_corpo": "magro",
+      "cor_pele": 3,
+      "tipo_cabelo": "careca",
+      "cor_cabelo": "preto",
+      "time": "franca",
+      "posicao": "ala_direita",
+      "numero": 7,
+      "altura": 1.67
+    },
+    {
+      "id": "franca_5",
+      "nome": "Malik",
+      "tipo_corpo": "parrudo",
+      "cor_pele": 4,
+      "tipo_cabelo": "cacheado",
+      "cor_cabelo": "preto",
+      "time": "franca",
+      "posicao": "atacante",
+      "numero": 9,
+      "altura": 1.75
+    }
+  ]
+}

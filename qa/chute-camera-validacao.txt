@@ -1,0 +1,9 @@
+Camera de chute por tras do jogador - Godot 4.7.2
+Shot_moment 67/67: 5 direcoes, posicao atras do chutador, lente alinhada ao impulso real, pausa, tempo, retorno, bola/mira inalteradas, bordas do campo, cobranca e prioridades.
+12 suites passaram nesta rodada: 399 verificacoes. Inclui slide_moment 27 e foul_fall 55. As suites de velocidade normal desativam cinematicos para medir seus tempos; a suite propria e a partida completa usam o novo efeito.
+Full_match PASS: 12985 ticks, placar 1x0, 12 chutes, 106 passes, 71 desarmes.
+Captura OpenGL nativa: 132 frames, dois times, chutes fisicos com animacao. Camera atras do Brasil olhando para a direita e atras da Argentina olhando para a esquerda.
+Disparo somente em strike validado, depois de soltar bola de cobranca e aplicar impulso. Nenhum efeito em passes ou tentativa sem contato.
+Entrada 0.22s; distancia traseira 9m; altura 4.8m; FOV 48; camera lenta 0.75s; retorno 0.35s. Envoltoria compartilhada com slide_moment sem mudar as constantes do carrinho.
+Carrinho e falta cancelam camera de chute antes de assumir o tempo global. Gol e bola fora liberam velocidade e retornam suavemente. Pausa congela; menu/reposicao/saida da cena cancelam e restauram velocidade.
+JSON externo de elenco e OUT_DURATION 1.5s preservados.

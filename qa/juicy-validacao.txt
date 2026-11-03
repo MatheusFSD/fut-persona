@@ -1,0 +1,39 @@
+Juicy: sons e câmera — 02/11/2026
+
+26 WAVs originais, 786570 bytes no total, gerados sem fontes externas.
+Passe seco, chute, chute forte, trave metálica, defesa, desarme e rede:
+três variações por impacto. Apitos curto/longo e três camadas de torcida.
+Oito vozes 3D para impactos, apito e torcida separados, ambiente discreto,
+limitação de pico nativa. M silencia imediatamente; pausa interrompe efeitos.
+Gerador aleatório do áudio separado do gerador da partida/IA.
+
+Pulsos leves de câmera para chute, chute forte, trave, defesa, desarme e gol.
+Envelopes de 0,17 a 0,42 s, deslocamentos/rotação/FOV limitados e retorno
+sem deriva. Mira usa a projeção estável de uma câmera que não renderiza.
+Nenhuma força, posição da bola, regra ou atributo de jogador foi alterado.
+OUT_DURATION = 1.5 encontrado no projeto foi preservado; teste de reposição
+agora respeita o tempo configurado, em vez de fixar dois segundos.
+
+JUICE 32/32: vozes espaciais e sobreposição, variantes, limitador, ambiente,
+mute/unmute, RNG da partida, intensidade, impulsos limitados, mira estável,
+única câmera de render, física intacta, pausa, retorno do enquadramento,
+eventos reais de passe/chute/trave/defesa/gol e limpeza ao repor/sair.
+REGRESSION 37/37
+CONTROL_CAMERA 23/23
+PITCH_AIM 17/17
+POSSESSION 27/27
+LOCAL_REACTIONS 29/29
+ARCADE_UI 27/27
+RESTARTS_FENCE 36/36
+Total desta alteração: 228 verificações aprovadas.
+
+FULL_MATCH PASS: 11461 passos, três minutos completos, placar [0, 1],
+chutes [27, 15], passes [47, 48], desarmes [38, 39].
+
+Áudio: captura real do barramento Godot, estéreo 44100 Hz, 8,731 s,
+pico 0,27054, sem clipping. Todos os 26 arquivos com pico inferior a 0,9.
+Câmera: 72 quadros capturados no Godot; deslocamento máximo medido no
+ponto de referência de 2,61 pixels, demonstrando a intensidade discreta.
+
+Executável Windows atualizado e iniciado com sucesso com cadastro externo
+e catálogo embutido. Banco de sons e controlador juicy incluídos no pacote.

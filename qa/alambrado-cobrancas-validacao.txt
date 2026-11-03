@@ -1,0 +1,39 @@
+Alambrado, saída da bola e cobranças — 02/11/2026
+
+Alambrado low poly nos quatro lados, com 4 m de altura, postes quadrados,
+travessas e losangos vazados. Quatro malhas de fios com menos de 2500 triângulos
+no total, um MultiMesh para postes/travessas e quatro caixas físicas nativas.
+Espaço fora das linhas e atrás das redes. A bola rebate fisicamente no alambrado.
+
+Saída pela lateral/fundo: dois segundos na física, sem congelar ou teleportar.
+Último toque e cobrança ficam registrados ao sair; eventual retorno da bola
+não muda a decisão. Relógio parado, sem aquisição de posse durante a saída.
+
+Falta, escanteio, tiro de meta e lateral: cobrador já recebe a bola parada,
+fica selecionado no time humano e aguarda chute ou passe. Sem precisar dominar
+ou permitir condução antes da cobrança. Tiro de meta usa o goleiro.
+Impulso nativo somente no instante do contato da animação. IA cobra normalmente.
+Pausa preserva o intervalo e a bola preparada. Menu/nova partida limpam o estado.
+
+RESTARTS_FENCE 36/36: grade completa e leve, contenção física, bola seguindo
+após a saída, espera de 1,95 s antes da reposição, decisão preservada, pausa,
+posse pronta nas quatro cobranças, bloqueio de condução/desarme, passe com
+clique direito e chute carregado com esquerdo, impulso sem dominar primeiro,
+cobranças da IA e do modo torcida, limpeza ao sair da partida.
+REGRESSION 37/37
+CONTROL_CAMERA 23/23
+POSSESSION 27/27
+PITCH_AIM 17/17
+LOCAL_REACTIONS 29/29
+ARCADE_UI 27/27
+NATIONAL_TEAMS 1700/1700
+Total desta alteração: 1896 verificações aprovadas.
+
+FULL_MATCH PASS: 11226 passos, três minutos completos, placar [0, 0],
+chutes [7, 15], passes [49, 36], desarmes [38, 40].
+
+Capturas do Godot conferidas: campo cercado, detalhe dos losangos,
+escanteio pronto, goleiro com tiro de meta e falta pronta para cobrar.
+
+Executável Windows reexportado e iniciado com sucesso com o cadastro externo
+e com o catálogo embutido: dez jogadores ativos, quatro seleções.

@@ -1,0 +1,164 @@
+{
+  "hero": {
+    "source_sha256": "662236fe9a3bf21f501be9d36f79e00f9b3dac4bdeedb36b2a5e17ed6502510f",
+    "bones": 65,
+    "targets": {
+      "Magro": {
+        "height_scale": 1.0,
+        "min": [
+          -0.98133,
+          0.01333,
+          -0.12991
+        ],
+        "max": [
+          0.98122,
+          1.77604,
+          0.17117
+        ]
+      },
+      "Parrudo": {
+        "height_scale": 1.0,
+        "min": [
+          -0.98133,
+          0.01333,
+          -0.18941
+        ],
+        "max": [
+          0.98122,
+          1.77605,
+          0.18723
+        ]
+      },
+      "BaixoMagro": {
+        "height_scale": 0.84,
+        "min": [
+          -0.82432,
+          0.0112,
+          -0.10912
+        ],
+        "max": [
+          0.82422,
+          1.52498,
+          0.14378
+        ]
+      },
+      "BaixoParrudo": {
+        "height_scale": 0.84,
+        "min": [
+          -0.82432,
+          0.0112,
+          -0.15911
+        ],
+        "max": [
+          0.82422,
+          1.52498,
+          0.15727
+        ]
+      }
+    },
+    "invariants": {
+      "all_original_accessors_identical": true,
+      "same_vertex_count": true,
+      "same_triangle_indices": true,
+      "same_uvs": true,
+      "same_joint_indices_and_weights": true,
+      "same_65_bones": true,
+      "normal_base_unchanged": true
+    },
+    "vertices": 1838,
+    "triangles": 866,
+    "blender_validation": {
+      "mesh_vertices": 1838,
+      "polygons": 866,
+      "bones": 65,
+      "shape_keys": [
+        "Basis",
+        "Magro",
+        "Parrudo",
+        "BaixoMagro",
+        "BaixoParrudo"
+      ]
+    }
+  },
+  "enemy_a": {
+    "source_sha256": "b0e7be0edb27e7c6d1fee43b095079d6b20d5b878edfdc21001b09b8eb5f6041",
+    "bones": 65,
+    "targets": {
+      "Magro": {
+        "height_scale": 1.0,
+        "min": [
+          -0.98468,
+          0.01271,
+          -0.1264
+        ],
+        "max": [
+          0.98215,
+          1.76746,
+          0.17058
+        ]
+      },
+      "Parrudo": {
+        "height_scale": 1.0,
+        "min": [
+          -0.98468,
+          0.01271,
+          -0.18348
+        ],
+        "max": [
+          0.98215,
+          1.76747,
+          0.19404
+        ]
+      },
+      "BaixoMagro": {
+        "height_scale": 0.84,
+        "min": [
+          -0.82713,
+          0.01068,
+          -0.10617
+        ],
+        "max": [
+          0.82501,
+          1.51637,
+          0.14329
+        ]
+      },
+      "BaixoParrudo": {
+        "height_scale": 0.84,
+        "min": [
+          -0.82713,
+          0.01068,
+          -0.15413
+        ],
+        "max": [
+          0.82501,
+          1.51638,
+          0.163
+        ]
+      }
+    },
+    "invariants": {
+      "all_original_accessors_identical": true,
+      "same_vertex_count": true,
+      "same_triangle_indices": true,
+      "same_uvs": true,
+      "same_joint_indices_and_weights": true,
+      "same_65_bones": true,
+      "normal_base_unchanged": true
+    },
+    "vertices": 1840,
+    "triangles": 868,
+    "blender_validation": {
+      "mesh_vertices": 1840,
+      "polygons": 868,
+      "bones": 65,
+      "shape_keys": [
+        "Basis",
+        "Magro",
+        "Parrudo",
+        "BaixoMagro",
+        "BaixoParrudo"
+      ]
+    }
+  }
+}

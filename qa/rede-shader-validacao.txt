@@ -1,0 +1,25 @@
+Redes por shader - Godot 4.7.2 / Compatibility OpenGL
+Shader espacial com senoide amortecida e atraso pela distancia, preso nas bordas.
+Dois gols compartilham uma ArrayMesh estatica de 10044 vertices, uma superficie por gol, materiais independentes.
+Fundo + duas laterais por gol; fios com segmentos <=0.20m. Sem textura/alpha, sem solver de tecido ou nova fisica.
+Seis colisores existentes mantidos, com tags para comunicar contato real ao shader. Gol nao dispara deformacao falsa ao cruzar a linha: a batida nativa aciona depois.
+Ate 4 impactos por gol, intensidade por velocidade, filtro para bola lenta e contatos repetidos.
+Apenas uniforms sao atualizados, sem reconstruir malha por quadro. Controlador fica inativo apos 1.7s sem impactos.
+Tempo escalado da fisica; acompanha camera lenta, congela na pausa, limpa em reposicao e menu.
+37 testes especificos: geometria, ancoras, intensidade, limites, grupos, material, pausa, delta, limpeza e colisoes reais nos dois gols.
+GPU OpenGL: PASS. Comparacao de todos os pixels comprovou deformacao, pausa identica e retorno exatamente ao repouso.
+Captura nativa de duas batidas fisicas: fundo e lateral; 144 frames; PASS.
+GOAL_NET 37/37
+PITCH_AIM 17/17
+REGRESSION 37/37
+RESTARTS_FENCE 36/36
+BALL_FX 22/22
+JUICE 32/32
+SHOT_MOMENT 67/67
+FOUL_FALL 55/55
+KICK_VARIANTS 148/148
+ARCADE_UI 27/27
+LOCAL_REACTIONS 29/29
+Verificacoes repetidas nesta rodada: 507, todas passaram.
+Partida completa PASS: 12266 ticks, placar 0x1, 6 chutes, 120 passes, 57 desarmes.
+OUT_DURATION 1.5s e elenco JSON externo preservados.

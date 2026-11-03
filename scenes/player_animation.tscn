@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/player_animation.gd" id="1_script"]
+[ext_resource type="AnimationNodeBlendTree" path="res://assets/animations/player_tree.tres" id="2_graph"]
+
+[node name="AnimationTree" type="AnimationTree"]
+active = false
+callback_mode_process = 2
+tree_root = ExtResource("2_graph")
+script = ExtResource("1_script")

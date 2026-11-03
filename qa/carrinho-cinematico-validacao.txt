@@ -1,0 +1,9 @@
+Carrinho cinematografico - Godot 4.7.2
+27/27 verificacoes especificas passaram.
+Relogio real headless 60fps: camera lenta 0.748985 s, retorno completo 1.099025 s.
+Regressoes repetidas: regression 37, control_camera 23, possession 27, juice 32, ball_fx 22, local_reactions 29, restarts_fence 36, pitch_aim 17, arcade_ui 27. Todas passaram.
+Partida completa com cinematico ligado: PASS, 12202 ticks, placar 1x0, 6 chutes, 91 passes, 79 desarmes.
+Captura nativa OpenGL: 55 frames, GIF 30fps. Captura em passo fixo; tempo de gravacao PNG nao e usado na medicao com relogio real.
+Teste de pausa, cancelamento por reposicao/menu/gol/saida de cena, mira estavel e ausencia de alteracoes de posicao/velocidade da bola.
+OUT_DURATION do usuario mantido em 1.5 s. JSON externo de elenco preservado.
+Relogio real OpenGL 60fps: camera lenta 0.683885 s, retorno completo 1.033025 s (quantizacao por frames).

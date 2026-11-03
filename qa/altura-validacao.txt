@@ -1,0 +1,38 @@
+Altura independente do biotipo — 02/11/2026
+
+Cada perfil tem altura em metros, com precisão de centímetros, de 1,20 a 2,30 m.
+Há somente três biotipos: normal, magro e parrudo.
+Vinte jogadores das quatro seleções receberam alturas próprias.
+O cartão exibe biotipo e altura, por exemplo: PARRUDO / 1,72 m.
+
+Os quatro morphs existentes são combinados para gerar altura contínua,
+preservando o tamanho da cabeça. Calibração pela altura real da malha na pose
+de referência, entre a sola e o topo da cabeça, com erro inferior a 2 mm nos
+testes. Poses com joelhos/coluna dobrados reduzem a altura aparente.
+
+Mesmas malhas, vértices, triângulos, UVs, pesos, 65 ossos e máscaras.
+Nenhuma escala de objeto ou textura nova. Esqueleto, vínculos inversos,
+animações, cápsulas e números acompanham a altura. Modelos e materiais são
+compartilhados; clipes ajustados são reutilizados por altura de esqueleto.
+
+Cadastro antigo sem altura recebe 1,78 m; baixo_magro/baixo_parrudo e os
+índices antigos 3/4 migram para magro/parrudo com 1,53 m.
+Uma altura explícita prevalece sobre a altura padrão da migração.
+
+PLAYER_HEIGHTS 186/186: três corpos em cinco alturas, de 1,20 a 2,30 m,
+nos dois modelos; medidas reais, estabilidade da cabeça, onze poses,
+compartilhamento de malha/animação, volume de cada corpo, validação e migração.
+BODY_TYPES 84/84
+APPEARANCE 72/72
+NATIONAL_TEAMS 1700/1700
+REGRESSION 37/37
+CONTROL_CAMERA 23/23
+PITCH_AIM 17/17
+POSSESSION 27/27
+Total: 2146/2146 verificações aprovadas.
+
+FULL_MATCH PASS: 11502 passos de física, três minutos completos,
+placar [1, 0], chutes [8, 10], passes [42, 32], desarmes [35, 36].
+
+Capturas do Godot conferidas: nove combinações de 1,55 / 1,78 / 2,00 m
+em cada modelo, além de trote, chute, carrinho e cartão do jogador.

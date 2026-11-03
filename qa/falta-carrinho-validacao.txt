@@ -1,0 +1,12 @@
+Falta de carrinho com queda - Godot 4.7.2
+Originais UAL2: Hit_Knockback (0.8333s), LayToIdle (1.5333s), ambos sem loop, mesmas 65 juntas. Recuperacao retargeted para as alturas de cadastro.
+FALL_RATE 1.4. Apresentacao 1.8105s simulados antes da preparacao normal da falta.
+Mesmo diretor slide_moment do carrinho limpo: zoom/orbita Y/inclinacao/tremor, camera lenta 0.75s, retorno 0.35s. Nenhuma constante desse efeito foi alterada.
+Foul_fall 55/55; slide_moment 27/27.
+Regressoes repetidas: regression 37, control_camera 23, possession 27, juice 32, ball_fx 22, local_reactions 29, restarts_fence 36, arcade_ui 27. Todas passaram (315 verificacoes nesta rodada).
+Captura OpenGL nativa: 105 frames a 30fps, queda -> levantar -> preparacao da falta. PASS.
+Partida completa com ambos os cinematicos ligados: PASS 12186 ticks, placar 0x0, 6 chutes, 111 passes, 65 desarmes.
+A falta e decidida no contato; bola e relogio param. Sem troca de formacao antes da queda. Posse pronta para cobranca depois da recuperacao.
+Pausa congela camera, queda e relogio de falta. Menu/nova partida/cancelamento limpam queda e restauram Engine.time_scale.
+Testadas duas equipes e poses dos dois clipes nos dez jogadores com seus biotipos/alturas.
+OUT_DURATION 1.5 preservado. JSON de elenco externo preservado.

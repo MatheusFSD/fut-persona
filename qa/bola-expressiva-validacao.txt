@@ -1,0 +1,35 @@
+Bola expressiva — 02/11/2026
+
+Rastro afunilado em chutes com carga >= 0,85. Núcleo creme e borda ciano.
+Pontos reais da trajetória do RigidBody3D, sem previsão ou alteração de forças.
+Máximo de 2 m, memória de 0,11 s, emissão de até 0,75 s e velocidade mínima
+de 16 m/s. Um ImmediateMesh sem textura/colisão, 16 pontos e até 180 vértices.
+Teste de profundidade preservado; a bola e a geometria opaca ocultam o rastro.
+Colisão e domínio interrompem emissão e a cauda desaparece em seguida.
+
+Marcas pequenas no ponto de chute/passe/desarme/defesa/trave e recepção rápida,
+com traços que deixam o centro livre. Duração de 0,16 a 0,22 s, até seis marcas,
+agrupamento de contatos e prioridade para impactos relevantes. Contato lento
+não gera flashes contínuos. Funciona com mute; pausa congela e reposição limpa.
+
+BALL_FX 22/22: chute forte real, ausência de rastro em passe/chute comum,
+trajetória medida da bola, limites de memória/comprimento, posição do contato,
+pausa, velocidades intactas, domínio, expiração, colisão nativa na trave,
+teleporte sem linha gigante, agrupamento, recepção e limpeza de estados.
+JUICE 32/32
+REGRESSION 37/37
+PITCH_AIM 17/17
+POSSESSION 27/27
+LOCAL_REACTIONS 29/29
+RESTARTS_FENCE 36/36
+Total desta alteração: 200 verificações aprovadas.
+
+FULL_MATCH PASS: 11461 passos, três minutos completos, placar [0, 1],
+chutes [27, 15], passes [47, 48], desarmes [38, 39]. Mesmo resultado do
+teste anterior, confirmando que os efeitos não mudam a simulação.
+
+Prévias renderizadas no Godot: contato de passe, contato de chute forte,
+rastro em voo e impacto na trave. GIF com 50 quadros a aproximadamente 30 fps.
+
+Executável Windows atualizado e iniciado com sucesso com cadastro externo
+e catálogo embutido. Tempo OUT_DURATION = 1.5 preservado.

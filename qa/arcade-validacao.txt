@@ -1,0 +1,34 @@
+HUD e UI arcade / Persona — 02/11/2026
+
+Menu, seleção de países e uniformes, placar, cartão do jogador, fôlego,
+carregamento de chute, minimapa, pausa, ajuda e resultado redesenhados.
+Painéis inclinados, cores neon, contornos e sombras, retículas, títulos
+oscilantes, letreiro rolante e pulsação do botão principal.
+
+Bandeiras pixeladas originais de Brasil, Argentina, Alemanha e França:
+quatro texturas de 64x40 geradas em código, compartilhadas pelos cartões,
+seletores nativos, placar e comemoração. Sem arquivos novos de fontes.
+
+Gol real dispara letras em onda, faixa, impacto de luz, raios e confetes.
+Bandeira e seleção correspondem ao time que marcou. Mesmo gol não dispara
+outra animação; a comemoração termina normalmente na saída de bola.
+Efeitos somente no CanvasItem; câmera, física e tempo da partida preservados.
+
+ARCADE_UI 27/27: bandeiras compartilhadas, seletores, início, gol de ambos
+os times, contagem única, sequência das letras, saída de bola, pausa,
+continuação, resultado, retorno à seleção, animação independente da física
+e controles dentro da tela em 960x600, 1600x900 e 1024x768.
+REGRESSION 37/37
+CONTROL_CAMERA 23/23
+PITCH_AIM 17/17
+POSSESSION 27/27
+NATIONAL_TEAMS 1700/1700
+Total desta alteração: 1831 verificações aprovadas.
+
+Capturas renderizadas no Godot: seleção e lista de bandeiras, Alemanha
+contra França, partida, chute, pausa, quatro tempos da comemoração,
+gol argentino, resultado e três tamanhos de janela.
+Prévia animada: 56 quadros a 20 fps, com 2,8 segundos de comemoração.
+
+Executável Windows reexportado e iniciado com sucesso, tanto com cadastro
+externo quanto com o catálogo embutido: dez jogadores e quatro seleções.

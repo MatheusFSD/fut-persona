@@ -1,0 +1,164 @@
+{
+  "crowd_ambience.wav": {
+    "bytes": 352844,
+    "duration": 8.0,
+    "peak": 0.85999,
+    "rms_db": -14.45
+  },
+  "crowd_chance.wav": {
+    "bytes": 50758,
+    "duration": 1.15,
+    "peak": 0.85999,
+    "rms_db": -17.72
+  },
+  "crowd_cheer.wav": {
+    "bytes": 127934,
+    "duration": 2.9,
+    "peak": 0.85999,
+    "rms_db": -17.25
+  },
+  "goal_1.wav": {
+    "bytes": 10628,
+    "duration": 0.24,
+    "peak": 0.85999,
+    "rms_db": -15.22
+  },
+  "goal_2.wav": {
+    "bytes": 10628,
+    "duration": 0.24,
+    "peak": 0.85999,
+    "rms_db": -14.99
+  },
+  "goal_3.wav": {
+    "bytes": 10628,
+    "duration": 0.24,
+    "peak": 0.85999,
+    "rms_db": -15.24
+  },
+  "pass_1.wav": {
+    "bytes": 4896,
+    "duration": 0.11,
+    "peak": 0.85999,
+    "rms_db": -14.01
+  },
+  "pass_2.wav": {
+    "bytes": 4896,
+    "duration": 0.11,
+    "peak": 0.85999,
+    "rms_db": -14.01
+  },
+  "pass_3.wav": {
+    "bytes": 4896,
+    "duration": 0.11,
+    "peak": 0.85999,
+    "rms_db": -13.61
+  },
+  "post_1.wav": {
+    "bytes": 21212,
+    "duration": 0.48,
+    "peak": 0.85999,
+    "rms_db": -17.85
+  },
+  "post_2.wav": {
+    "bytes": 21212,
+    "duration": 0.48,
+    "peak": 0.85999,
+    "rms_db": -18.26
+  },
+  "post_3.wav": {
+    "bytes": 21212,
+    "duration": 0.48,
+    "peak": 0.85999,
+    "rms_db": -17.64
+  },
+  "power_1.wav": {
+    "bytes": 11068,
+    "duration": 0.25,
+    "peak": 0.85999,
+    "rms_db": -13.92
+  },
+  "power_2.wav": {
+    "bytes": 11068,
+    "duration": 0.25,
+    "peak": 0.85999,
+    "rms_db": -13.92
+  },
+  "power_3.wav": {
+    "bytes": 11068,
+    "duration": 0.25,
+    "peak": 0.85999,
+    "rms_db": -13.83
+  },
+  "save_1.wav": {
+    "bytes": 7982,
+    "duration": 0.18,
+    "peak": 0.85999,
+    "rms_db": -18.06
+  },
+  "save_2.wav": {
+    "bytes": 7982,
+    "duration": 0.18,
+    "peak": 0.85999,
+    "rms_db": -18.18
+  },
+  "save_3.wav": {
+    "bytes": 7982,
+    "duration": 0.18,
+    "peak": 0.85999,
+    "rms_db": -18.04
+  },
+  "shot_1.wav": {
+    "bytes": 8424,
+    "duration": 0.19,
+    "peak": 0.85999,
+    "rms_db": -14.1
+  },
+  "shot_2.wav": {
+    "bytes": 8424,
+    "duration": 0.19,
+    "peak": 0.85999,
+    "rms_db": -13.84
+  },
+  "shot_3.wav": {
+    "bytes": 8424,
+    "duration": 0.19,
+    "peak": 0.85999,
+    "rms_db": -14.21
+  },
+  "tackle_1.wav": {
+    "bytes": 8424,
+    "duration": 0.19,
+    "peak": 0.85999,
+    "rms_db": -19.46
+  },
+  "tackle_2.wav": {
+    "bytes": 8424,
+    "duration": 0.19,
+    "peak": 0.85999,
+    "rms_db": -19.3
+  },
+  "tackle_3.wav": {
+    "bytes": 8424,
+    "duration": 0.19,
+    "peak": 0.85999,
+    "rms_db": -19.85
+  },
+  "whistle.wav": {
+    "bytes": 9304,
+    "duration": 0.21,
+    "peak": 0.85999,
+    "rms_db": -7.79
+  },
+  "whistle_long.wav": {
+    "bytes": 27828,
+    "duration": 0.63,
+    "peak": 0.85999,
+    "rms_db": -7.95
+  },
+  "native_demo": {
+    "rate": 44100,
+    "channels": 2,
+    "duration": 8.731,
+    "peak": 0.27054
+  }
+}

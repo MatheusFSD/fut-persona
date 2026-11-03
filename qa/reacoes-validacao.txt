@@ -1,0 +1,38 @@
+Reações 2D no local da jogada — 02/11/2026
+
+Carrinho limpo: NA BOLA! / desarme: É NOSSA! / trave: NA TRAVEEE!
+Defesa de chute: MILAGRE! / chute forte: WOOOOW! / falta: FOI MAL!
+Lateral: SAIU! / escanteio: NO CANTO! / tiro de meta: PRA FORA!
+Faltas e reposições também indicam o tipo e a seleção que cobra.
+
+Etiquetas 2D com recorte, ponteiro para o ponto do evento, entrada elástica,
+inclinação, oscilação e desaparecimento suave. Coordenada mundial fixa,
+reprojetada com a câmera a cada quadro; não segue o jogador após a jogada.
+Limite de quatro etiquetas e duração de 1,1 a 1,6 segundos.
+Contatos repetidos próximos são agrupados. Pausa congela a animação.
+Gol, nova saída, término e seleção limpam os elementos antigos.
+
+Somente os seis corpos físicos existentes dos postes e travessões foram
+identificados para a reação de trave. Chão, rede e contato lento não disparam.
+Nenhuma malha, colisão, câmera, impulso ou regra de posse foi alterada.
+Avisos gerais continuam no alto; lances e cobranças aparecem no campo.
+
+LOCAL_REACTIONS 29/29: carrinho, desarme, falta, cobranças, chute, defesa,
+impacto real da bola contra poste no solver nativo, ausência de falsos avisos,
+projeção com câmera em movimento, local fixo, agrupamento, limite, expiração,
+pausa, gol, saída e seleção. Sem interceptar cliques.
+ARCADE_UI 27/27
+REGRESSION 37/37
+POSSESSION 27/27
+PITCH_AIM 17/17
+Total desta alteração: 137 verificações aprovadas.
+
+FULL_MATCH PASS: 11502 passos, três minutos completos, placar [1, 0],
+chutes [8, 10], passes [42, 32], desarmes [35, 36].
+
+Capturas renderizadas no Godot e conferidas: carrinho na bola, trave,
+chute forte, defesa, falta e lateral. GIF com 32 quadros a 20 fps,
+incluindo movimento da câmera para demonstrar a ancoragem no campo.
+
+Executável Windows reexportado e iniciado com sucesso com cadastro externo
+e com catálogo embutido: dez jogadores ativos, quatro seleções.

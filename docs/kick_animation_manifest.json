@@ -1,0 +1,20 @@
+{
+  "fps": 100,
+  "skeleton_bones": 65,
+  "clips": [
+    {
+      "name": "Kick_Medium",
+      "contact": 0.22,
+      "length": 0.64,
+      "anticipation": 0.13,
+      "follow_through": 0.32
+    },
+    {
+      "name": "Kick_Strong",
+      "contact": 0.27,
+      "length": 0.82,
+      "anticipation": 0.18,
+      "follow_through": 0.39
+    }
+  ]
+}

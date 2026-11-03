@@ -1,0 +1,54 @@
+{
+  "hero": {
+    "mask": {
+      "path": "hero_regions.png",
+      "resolution": [
+        256,
+        256
+      ],
+      "bytes": 38266,
+      "regions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "before_bytes": 959828,
+    "after_bytes": 301636,
+    "topology_uv_weights_bones_and_body_morphs_unchanged": true,
+    "photo_textures_removed": true,
+    "unused_gun_clips_removed": true
+  },
+  "enemy_a": {
+    "mask": {
+      "path": "enemy_a_regions.png",
+      "resolution": [
+        256,
+        256
+      ],
+      "bytes": 39711,
+      "regions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "before_bytes": 999956,
+    "after_bytes": 301944,
+    "topology_uv_weights_bones_and_body_morphs_unchanged": true,
+    "photo_textures_removed": true,
+    "unused_gun_clips_removed": true
+  }
+}

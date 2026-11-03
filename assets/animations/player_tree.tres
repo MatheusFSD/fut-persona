@@ -1,0 +1,235 @@
+[gd_resource type="AnimationNodeBlendTree" format=3]
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_dkurh"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_q5l68"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6t85h"]
+animation = &"football/Yes"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_deq27"]
+animation = &"football/Hit_Knockback"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bqdig"]
+animation = &"football/LayToIdle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qtfnr"]
+animation = &"keeper/Catch"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v3c35"]
+animation = &"keeper/Dive"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q1b4s"]
+animation = &"keeper/Jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m0l1d"]
+animation = &"keeper/Land"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_i5ybw"]
+animation = &"keeper/Reach"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8ika1"]
+animation = &"keeper/Ready"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_argul"]
+animation = &"keeper/Recover"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wwkl5"]
+animation = &"keeper/Throw"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pupr3"]
+animation = &"football/Idle_Loop"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wi50e"]
+animation = &"football/Walk_Loop"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pk3sc"]
+animation = &"football/Jog_Fwd_Loop"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f7b2n"]
+animation = &"football/Sprint_Loop"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 1
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_6i7st"]
+min_space = 0.0
+max_space = 7.4
+value_label = "Velocidade (m/s)"
+sync_mode = 1
+blend_point_0/node = SubResource("AnimationNodeAnimation_pupr3")
+blend_point_0/pos = 0.0
+blend_point_0/name = &"Idle"
+blend_point_1/node = SubResource("AnimationNodeAnimation_wi50e")
+blend_point_1/pos = 1.5
+blend_point_1/name = &"Walk"
+blend_point_2/node = SubResource("AnimationNodeAnimation_pk3sc")
+blend_point_2/pos = 4.5
+blend_point_2/name = &"Jog"
+blend_point_3/node = SubResource("AnimationNodeAnimation_f7b2n")
+blend_point_3/pos = 7.4
+blend_point_3/name = &"Sprint"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ml01h"]
+animation = &"custom/pass"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qvk65"]
+animation = &"kicks/Kick_Medium"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1ivrh"]
+animation = &"kicks/Kick_Strong"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pn3aw"]
+animation = &"custom/shot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xd0fj"]
+animation = &"football/Slide_Exit"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fo4f7"]
+animation = &"football/Slide_Loop"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nrx4x"]
+animation = &"football/Slide_Start"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bqb0h"]
+animation = &"football/Jump_Land"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_63f2h"]
+animation = &"custom/tackle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1qlcs"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ucpdp"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_80fuo"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_k876d"]
+xfade_time = 0.035
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uqi01"]
+xfade_time = 0.035
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_r5a7f"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yfjln"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_b5way"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5xndo"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4156g"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hof73"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_t661m"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8gi0e"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0stn1"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_l3us7"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5fqyv"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_u83mi"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_l4ykg"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vo6b3"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ynoql"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ud1sk"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ci3b8"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_p67hg"]
+states/Celebrate/node = SubResource("AnimationNodeAnimation_6t85h")
+states/Celebrate/position = Vector2(1050, 430)
+states/Fall/node = SubResource("AnimationNodeAnimation_deq27")
+states/Fall/position = Vector2(550, 430)
+states/GetUp/node = SubResource("AnimationNodeAnimation_bqdig")
+states/GetUp/position = Vector2(800, 430)
+states/KeeperCatch/node = SubResource("AnimationNodeAnimation_qtfnr")
+states/KeeperCatch/position = Vector2(800, 650)
+states/KeeperDive/node = SubResource("AnimationNodeAnimation_v3c35")
+states/KeeperDive/position = Vector2(1050, 540)
+states/KeeperJump/node = SubResource("AnimationNodeAnimation_q1b4s")
+states/KeeperJump/position = Vector2(550, 650)
+states/KeeperLand/node = SubResource("AnimationNodeAnimation_m0l1d")
+states/KeeperLand/position = Vector2(800, 760)
+states/KeeperReach/node = SubResource("AnimationNodeAnimation_i5ybw")
+states/KeeperReach/position = Vector2(800, 540)
+states/KeeperReady/node = SubResource("AnimationNodeAnimation_8ika1")
+states/KeeperReady/position = Vector2(550, 540)
+states/KeeperRecover/node = SubResource("AnimationNodeAnimation_argul")
+states/KeeperRecover/position = Vector2(1050, 650)
+states/KeeperThrow/node = SubResource("AnimationNodeAnimation_wwkl5")
+states/KeeperThrow/position = Vector2(550, 760)
+states/Locomotion/node = SubResource("AnimationNodeBlendSpace1D_6i7st")
+states/Locomotion/position = Vector2(300, 100)
+states/Pass/node = SubResource("AnimationNodeAnimation_ml01h")
+states/Pass/position = Vector2(550, 210)
+states/ShotMedium/node = SubResource("AnimationNodeAnimation_qvk65")
+states/ShotMedium/position = Vector2(800, 100)
+states/ShotStrong/node = SubResource("AnimationNodeAnimation_1ivrh")
+states/ShotStrong/position = Vector2(1050, 100)
+states/ShotWeak/node = SubResource("AnimationNodeAnimation_pn3aw")
+states/ShotWeak/position = Vector2(550, 100)
+states/SlideExit/node = SubResource("AnimationNodeAnimation_xd0fj")
+states/SlideExit/position = Vector2(800, 320)
+states/SlideLoop/node = SubResource("AnimationNodeAnimation_fo4f7")
+states/SlideLoop/position = Vector2(550, 320)
+states/SlideStart/node = SubResource("AnimationNodeAnimation_nrx4x")
+states/SlideStart/position = Vector2(1050, 210)
+states/Stunned/node = SubResource("AnimationNodeAnimation_bqb0h")
+states/Stunned/position = Vector2(1050, 320)
+states/Tackle/node = SubResource("AnimationNodeAnimation_63f2h")
+states/Tackle/position = Vector2(800, 210)
+transitions = ["Start", "Locomotion", SubResource("AnimationNodeStateMachineTransition_1qlcs"), "ShotWeak", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "ShotMedium", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "ShotStrong", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "Pass", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "Tackle", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "SlideStart", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "SlideLoop", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "SlideExit", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "Stunned", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "Fall", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "GetUp", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "Celebrate", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "KeeperReady", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "KeeperReach", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "KeeperDive", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "KeeperJump", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "KeeperCatch", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "KeeperRecover", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "KeeperThrow", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "KeeperLand", "Locomotion", SubResource("AnimationNodeStateMachineTransition_ucpdp"), "Locomotion", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "ShotMedium", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "ShotStrong", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "Pass", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "Tackle", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "SlideStart", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "SlideLoop", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "SlideExit", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "Stunned", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "Fall", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "GetUp", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "Celebrate", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "KeeperReady", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "KeeperReach", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "KeeperDive", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "KeeperJump", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "KeeperCatch", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "KeeperRecover", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "KeeperThrow", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "KeeperLand", "ShotWeak", SubResource("AnimationNodeStateMachineTransition_80fuo"), "Locomotion", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "ShotWeak", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "ShotStrong", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "Pass", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "Tackle", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "SlideStart", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "SlideLoop", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "SlideExit", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "Stunned", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "Fall", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "GetUp", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "Celebrate", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "KeeperReady", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "KeeperReach", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "KeeperDive", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "KeeperJump", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "KeeperCatch", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "KeeperRecover", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "KeeperThrow", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "KeeperLand", "ShotMedium", SubResource("AnimationNodeStateMachineTransition_k876d"), "Locomotion", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "ShotWeak", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "ShotMedium", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "Pass", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "Tackle", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "SlideStart", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "SlideLoop", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "SlideExit", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "Stunned", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "Fall", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "GetUp", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "Celebrate", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "KeeperReady", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "KeeperReach", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "KeeperDive", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "KeeperJump", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "KeeperCatch", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "KeeperRecover", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "KeeperThrow", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "KeeperLand", "ShotStrong", SubResource("AnimationNodeStateMachineTransition_uqi01"), "Locomotion", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "ShotWeak", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "ShotMedium", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "ShotStrong", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "Tackle", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "SlideStart", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "SlideLoop", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "SlideExit", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "Stunned", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "Fall", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "GetUp", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "Celebrate", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "KeeperReady", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "KeeperReach", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "KeeperDive", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "KeeperJump", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "KeeperCatch", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "KeeperRecover", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "KeeperThrow", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "KeeperLand", "Pass", SubResource("AnimationNodeStateMachineTransition_r5a7f"), "Locomotion", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "ShotWeak", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "ShotMedium", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "ShotStrong", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "Pass", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "SlideStart", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "SlideLoop", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "SlideExit", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "Stunned", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "Fall", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "GetUp", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "Celebrate", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "KeeperReady", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "KeeperReach", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "KeeperDive", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "KeeperJump", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "KeeperCatch", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "KeeperRecover", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "KeeperThrow", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "KeeperLand", "Tackle", SubResource("AnimationNodeStateMachineTransition_yfjln"), "Locomotion", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "ShotWeak", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "ShotMedium", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "ShotStrong", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "Pass", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "Tackle", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "SlideLoop", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "SlideExit", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "Stunned", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "Fall", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "GetUp", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "Celebrate", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "KeeperReady", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "KeeperReach", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "KeeperDive", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "KeeperJump", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "KeeperCatch", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "KeeperRecover", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "KeeperThrow", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "KeeperLand", "SlideStart", SubResource("AnimationNodeStateMachineTransition_b5way"), "Locomotion", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "ShotWeak", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "ShotMedium", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "ShotStrong", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "Pass", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "Tackle", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "SlideStart", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "SlideExit", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "Stunned", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "Fall", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "GetUp", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "Celebrate", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "KeeperReady", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "KeeperReach", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "KeeperDive", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "KeeperJump", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "KeeperCatch", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "KeeperRecover", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "KeeperThrow", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "KeeperLand", "SlideLoop", SubResource("AnimationNodeStateMachineTransition_5xndo"), "Locomotion", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "ShotWeak", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "ShotMedium", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "ShotStrong", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "Pass", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "Tackle", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "SlideStart", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "SlideLoop", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "Stunned", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "Fall", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "GetUp", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "Celebrate", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "KeeperReady", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "KeeperReach", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "KeeperDive", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "KeeperJump", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "KeeperCatch", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "KeeperRecover", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "KeeperThrow", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "KeeperLand", "SlideExit", SubResource("AnimationNodeStateMachineTransition_4156g"), "Locomotion", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "ShotWeak", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "ShotMedium", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "ShotStrong", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "Pass", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "Tackle", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "SlideStart", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "SlideLoop", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "SlideExit", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "Fall", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "GetUp", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "Celebrate", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "KeeperReady", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "KeeperReach", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "KeeperDive", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "KeeperJump", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "KeeperCatch", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "KeeperRecover", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "KeeperThrow", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "KeeperLand", "Stunned", SubResource("AnimationNodeStateMachineTransition_hof73"), "Locomotion", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "ShotWeak", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "ShotMedium", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "ShotStrong", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "Pass", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "Tackle", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "SlideStart", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "SlideLoop", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "SlideExit", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "Stunned", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "GetUp", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "Celebrate", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "KeeperReady", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "KeeperReach", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "KeeperDive", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "KeeperJump", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "KeeperCatch", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "KeeperRecover", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "KeeperThrow", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "KeeperLand", "Fall", SubResource("AnimationNodeStateMachineTransition_t661m"), "Locomotion", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "ShotWeak", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "ShotMedium", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "ShotStrong", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "Pass", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "Tackle", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "SlideStart", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "SlideLoop", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "SlideExit", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "Stunned", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "Fall", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "Celebrate", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "KeeperReady", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "KeeperReach", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "KeeperDive", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "KeeperJump", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "KeeperCatch", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "KeeperRecover", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "KeeperThrow", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "KeeperLand", "GetUp", SubResource("AnimationNodeStateMachineTransition_8gi0e"), "Locomotion", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "ShotWeak", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "ShotMedium", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "ShotStrong", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "Pass", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "Tackle", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "SlideStart", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "SlideLoop", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "SlideExit", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "Stunned", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "Fall", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "GetUp", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "KeeperReady", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "KeeperReach", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "KeeperDive", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "KeeperJump", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "KeeperCatch", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "KeeperRecover", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "KeeperThrow", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "KeeperLand", "Celebrate", SubResource("AnimationNodeStateMachineTransition_0stn1"), "Locomotion", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "ShotWeak", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "ShotMedium", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "ShotStrong", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "Pass", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "Tackle", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "SlideStart", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "SlideLoop", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "SlideExit", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "Stunned", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "Fall", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "GetUp", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "Celebrate", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "KeeperReach", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "KeeperDive", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "KeeperJump", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "KeeperCatch", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "KeeperRecover", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "KeeperThrow", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "KeeperLand", "KeeperReady", SubResource("AnimationNodeStateMachineTransition_l3us7"), "Locomotion", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "ShotWeak", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "ShotMedium", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "ShotStrong", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "Pass", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "Tackle", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "SlideStart", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "SlideLoop", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "SlideExit", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "Stunned", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "Fall", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "GetUp", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "Celebrate", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "KeeperReady", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "KeeperDive", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "KeeperJump", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "KeeperCatch", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "KeeperRecover", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "KeeperThrow", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "KeeperLand", "KeeperReach", SubResource("AnimationNodeStateMachineTransition_5fqyv"), "Locomotion", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "ShotWeak", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "ShotMedium", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "ShotStrong", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "Pass", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "Tackle", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "SlideStart", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "SlideLoop", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "SlideExit", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "Stunned", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "Fall", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "GetUp", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "Celebrate", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "KeeperReady", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "KeeperReach", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "KeeperJump", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "KeeperCatch", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "KeeperRecover", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "KeeperThrow", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "KeeperLand", "KeeperDive", SubResource("AnimationNodeStateMachineTransition_u83mi"), "Locomotion", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "ShotWeak", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "ShotMedium", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "ShotStrong", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "Pass", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "Tackle", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "SlideStart", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "SlideLoop", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "SlideExit", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "Stunned", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "Fall", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "GetUp", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "Celebrate", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "KeeperReady", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "KeeperReach", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "KeeperDive", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "KeeperCatch", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "KeeperRecover", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "KeeperThrow", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "KeeperLand", "KeeperJump", SubResource("AnimationNodeStateMachineTransition_l4ykg"), "Locomotion", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "ShotWeak", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "ShotMedium", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "ShotStrong", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "Pass", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "Tackle", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "SlideStart", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "SlideLoop", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "SlideExit", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "Stunned", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "Fall", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "GetUp", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "Celebrate", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "KeeperReady", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "KeeperReach", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "KeeperDive", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "KeeperJump", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "KeeperRecover", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "KeeperThrow", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "KeeperLand", "KeeperCatch", SubResource("AnimationNodeStateMachineTransition_vo6b3"), "Locomotion", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "ShotWeak", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "ShotMedium", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "ShotStrong", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "Pass", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "Tackle", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "SlideStart", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "SlideLoop", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "SlideExit", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "Stunned", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "Fall", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "GetUp", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "Celebrate", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "KeeperReady", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "KeeperReach", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "KeeperDive", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "KeeperJump", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "KeeperCatch", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "KeeperThrow", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "KeeperLand", "KeeperRecover", SubResource("AnimationNodeStateMachineTransition_ynoql"), "Locomotion", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "ShotWeak", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "ShotMedium", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "ShotStrong", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "Pass", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "Tackle", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "SlideStart", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "SlideLoop", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "SlideExit", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "Stunned", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "Fall", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "GetUp", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "Celebrate", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "KeeperReady", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "KeeperReach", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "KeeperDive", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "KeeperJump", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "KeeperCatch", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "KeeperRecover", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "KeeperLand", "KeeperThrow", SubResource("AnimationNodeStateMachineTransition_ud1sk"), "Locomotion", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "ShotWeak", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "ShotMedium", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "ShotStrong", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "Pass", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "Tackle", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "SlideStart", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "SlideLoop", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "SlideExit", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "Stunned", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "Fall", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "GetUp", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "Celebrate", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "KeeperReady", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "KeeperReach", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "KeeperDive", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "KeeperJump", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "KeeperCatch", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "KeeperRecover", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8"), "KeeperThrow", "KeeperLand", SubResource("AnimationNodeStateMachineTransition_ci3b8")]
+
+[resource]
+nodes/States/node = SubResource("AnimationNodeStateMachine_p67hg")
+nodes/States/position = Vector2(0, 100)
+nodes/Rate/node = SubResource("AnimationNodeTimeScale_q5l68")
+nodes/Rate/position = Vector2(240, 100)
+nodes/ContactSeek/node = SubResource("AnimationNodeTimeSeek_dkurh")
+nodes/ContactSeek/position = Vector2(470, 100)
+node_connections = [&"output", 0, &"ContactSeek", &"Rate", 0, &"States", &"ContactSeek", 0, &"Rate"]

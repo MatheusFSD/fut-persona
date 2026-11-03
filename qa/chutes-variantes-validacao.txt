@@ -1,0 +1,31 @@
+Chutes fraco, medio e forte - Blender MCP + Godot 4.7.2
+Blender MCP local, Blender 5.2: acoes Kick_Medium e Kick_Strong criadas e salvas em tools/source/chutes.blend.
+65 ossos originais. Nenhuma alteracao em vertices, UVs, pesos, malhas ou bind poses do jogo.
+Fraco preserva custom/shot: contato 0.19s, duracao 0.54s.
+Medio: contato 0.22s, duracao 0.64s. Forte: contato 0.27s, duracao 0.82s.
+Preparacao inicia somente no mouse-up. Hold apenas carrega. Testado com eventos reais para as tres faixas.
+Marcador CONTACT e incorporado ao recurso Animation e lido pelo personagem. Pose do pe e sincronizada no instante do impulso.
+Camera traseira exclusiva dos fortes >=0.85, inclusive IA e cobrancas. Fraco/medio conservam enquadramento normal.
+Antecipacao, contrarrotacao de tronco/quadril, bracos em contrapeso, continuidade e recuperacao distintos.
+Apoio esquerdo com erro abaixo de 2.5cm em 25 amostras de cada clip nos 10 jogadores, com diferentes alturas/corpos e dois modelos.
+Ida e volta Blender/glTF/Godot: erro maximo de rotacao idle 0.000691rad e posicao 0.000000192m. Tracks de objeto e de root excluidos para preservar a base do Skeleton3D.
+KICK_VARIANTS 148/148 passaram. Movimento das maos preparacao-contato: medio 16.9/16.1cm; forte 30.7/39.4cm (esq/dir).
+REGRESSION 37/37
+CONTROL_CAMERA 23/23
+POSSESSION 27/27
+PITCH_AIM 17/17
+SHOT_MOMENT 67/67
+SLIDE_MOMENT 27/27
+FOUL_FALL 55/55
+JUICE 32/32
+BALL_FX 22/22
+RESTARTS_FENCE 36/36
+LOCAL_REACTIONS 29/29
+ARCADE_UI 27/27
+BODY_TYPES 84/84
+APPEARANCE 72/72
+PLAYER_HEIGHTS 186/186
+Total repetido: 889 verificacoes passaram.
+Partida completa PASS: 12266 ticks, placar 0x1, 6 chutes, 120 passes, 57 desarmes.
+Captura OpenGL nativa: 132 frames, GIF comparativo em velocidade normal. Efeito de camera e testado na suite propria.
+OUT_DURATION 1.5 e JSON de elenco externo preservados.

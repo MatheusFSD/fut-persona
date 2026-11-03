@@ -1,0 +1,26 @@
+Seleções e uniformes — 02/11/2026
+
+Brasil, Argentina, Alemanha e França: vinte perfis, dois uniformes por seleção.
+Goleiros com camisa diferente, manga comprida e cores próprias em cada uniforme.
+Menu para escolher seleções e uniformes; opção de voltar à seleção na pausa/fim.
+Malhas, máscaras, perfis e animações compartilhados. Nenhum bitmap ou vértice novo.
+
+NATIONAL_TEAMS 1700/1700: todos os 48 confrontos ordenados e combinações de kits,
+troca pela interface, reaproveitamento de perfil/malha, limpeza dos jogadores
+anteriores, reinício e compatibilidade com o cadastro antigo de dois times.
+
+REGRESSION 37/37
+CONTROL_CAMERA 23/23
+PITCH_AIM 17/17
+POSSESSION 27/27
+BODY_TYPES 84/84
+APPEARANCE 72/72
+
+FULL_MATCH PASS: 10965 passos de física, três minutos completos,
+placar [0, 0], chutes [4, 41], passes [71, 36], desarmes [27, 24].
+
+Prévias renderizadas no Godot e conferidas: menu, menu com camisa preta,
+oito uniformes juntos e close dos dois uniformes de cada seleção com goleiros.
+
+Executável Windows reexportado. Inicialização confirmada com catálogo externo
+e também com o catálogo embutido: dez jogadores ativos, quatro seleções.

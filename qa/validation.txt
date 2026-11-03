@@ -1,0 +1,34 @@
+V?rzea FC ? apar?ncia modular e montagem do elenco
+Motor: Godot 4.7.2, Compatibility / OpenGL 3.3
+
+260/260 verifica??es aprovadas:
+Regress?o 37, c?mera/controle 23, gramado/mira 17, posse 27, biotipos 84, apar?ncia/dados 72.
+
+Cada jogador ? montado a partir de FootballPlayerData: nome, corpo, pele, cabelo,
+cor do cabelo, time e posi??o, com identificador e n?mero opcionais.
+Cinco tons de pele; rosto pintado somente com a cor da pele.
+Cinco estilos de cabelo e cores configur?veis.
+Manga curta, short, mei?o e chuteira nos jogadores de linha.
+Goleiros identificados pela posi??o, com manga comprida, camisa diferente e luvas claras.
+
+Duas malhas com os quatro morphs de corpo intactos, duas m?scaras de 256x256 e um shader.
+Malhas: 1959784 bytes antes, 603580 bytes depois (aproximadamente 69% menores).
+M?scaras compartilhadas: 77977 bytes no total.
+Materiais e anima??es reutilizados; n?o h? um bitmap completo por jogador/combina??o.
+Topologia, UVs, pesos, ossos e morphs preservados; fotos e clipes de armas antigos removidos.
+
+Confer?ncia visual: elencos, tons/cabelos, rosto sem detalhes, uniformes e goleiros.
+Execut?vel Windows exportado e iniciado com sucesso, carregando os dez registros
+no match_roster.json externo ao lado do execut?vel. C?pia embutida confirmada no pacote.
+
+FULL_MATCH PASS ticks=10965 score=[0, 0] stats={ "shots": [4, 41], "passes": [71, 36], "tackles": [27, 24] }
+
+Logs locais em qa/*.log. Detalhes em docs/player_appearance_manifest.json.
+
+Ajuste de gola e peito:
+- Gola estreita e fechada, com acabamento na cor da camisa.
+- Ombros cobertos e tri?ngulos do peito sem recortes de pele.
+- 333 amostras de UV no peito do Morro e 334 no peito da Uni?o: nenhuma descoberta.
+- 72/72 verifica??es de apar?ncia reexecutadas e aprovadas.
+- Close-ups antes/depois conferidos nos dois modelos.
+- Execut?vel atualizado e inicializa??o confirmada com o elenco externo.
