@@ -1,4 +1,5 @@
 extends Node3D
+const GOAL = preload("res://scripts/goal_dimensions.gd")
 const GOAL_NET = preload("res://scripts/goal_net.gd")
 const DISTRICT = preload("res://scripts/praca_xv.gd")
 var game
@@ -40,7 +41,7 @@ func bar(a: Vector3, b: Vector3, radius: float, material: Material, solid := fal
 	mesh.top_radius = radius
 	mesh.bottom_radius = radius
 	mesh.height = a.distance_to(b)
-	mesh.radial_segments = 6
+	mesh.radial_segments = 32 if collision_group == &"goal_frame" else 6
 	mesh.rings = 1
 	var node := MeshInstance3D.new()
 	node.mesh = mesh
@@ -192,22 +193,22 @@ func _circle(at: Vector3, radius: float, width: float) -> void:
 
 func _goal(side: int) -> void:
 	var x := side * 24.0
-	for z in [-3.4, 3.4]:
-		bar(Vector3(x, 0, z), Vector3(x, 2.5, z), .09, chalk, true, &"goal_frame")
-		bar(Vector3(x, 2.5, z), Vector3(x + side * 1.8, 0, z), .035, rust)
-	bar(Vector3(x, 2.5, -3.4), Vector3(x, 2.5, 3.4), .09, chalk, true, &"goal_frame")
+	for z in [-GOAL.POST_Z, GOAL.POST_Z]:
+		bar(Vector3(x, 0, z), Vector3(x, GOAL.CROSSBAR_Y, z), GOAL.POST_RADIUS, chalk, true, &"goal_frame")
+		bar(Vector3(x, GOAL.CROSSBAR_Y, z), Vector3(x + side * 1.8, 0, z), .035, rust)
+	bar(Vector3(x, GOAL.CROSSBAR_Y, -GOAL.POST_Z), Vector3(x, GOAL.CROSSBAR_Y, GOAL.POST_Z), GOAL.POST_RADIUS, chalk, true, &"goal_frame")
 	var net = GOAL_NET.new(); net.name = "RedeDireita" if side > 0 else "RedeEsquerda"
 	net.game = game; net.position.x = x; net.rotation.y = PI if side < 0 else 0
 	add_child(net)
 	# The ground cords stay fixed. The three wire panels share a single static mesh.
-	for z in [-3.4, 3.4]:
+	for z in [-GOAL.POST_Z, GOAL.POST_Z]:
 		bar(Vector3(x,.04,z),Vector3(x+side*1.8,.04,z),.018,mat(Color("dedfcb")))
 	# Native collision contains shots inside the net after the goal sensor fires.
-	for z in [-3.5, 3.5]:
+	for z in [-(GOAL.POST_Z+.1), GOAL.POST_Z+.1]:
 		var body := _invisible_wall(Vector3(x+side*.95,1,z),Vector3(1.9,2,.06))
 		body.add_to_group("goal_net_body"); body.set_meta("goal_net",net)
 		body.set_meta("net_panel",1 if side*z < 0 else 2)
-	var back := _invisible_wall(Vector3(x+side*1.9,1.3,0),Vector3(.08,2.6,7))
+	var back := _invisible_wall(Vector3(x+side*1.9,1.3,0),Vector3(.08,2.6,GOAL.WIDTH+.32))
 	back.add_to_group("goal_net_body"); back.set_meta("goal_net",net); back.set_meta("net_panel",0)
 
 func _invisible_wall(at: Vector3, dimensions: Vector3) -> StaticBody3D:

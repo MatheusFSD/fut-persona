@@ -1,10 +1,14 @@
 extends Node3D
+const GOAL = preload("res://scripts/goal_dimensions.gd")
 ## Prediction chooses an attempt; only swept, animated glove contact saves a ball.
 enum State { POSITION, PREPARE, REACH, DIVE, JUMP, CATCH, HOLD, THROW, RECOVER, LAND }
-const REACTION_SECONDS := .12
+const REACTION_SECONDS := .18
+const POWER_REACTION_EXTRA_SECONDS := .22
+const POWER_REACTION_START_SPEED := 20.0
+const POWER_REACTION_FULL_SPEED := 26.0
 const COMMIT_SECONDS := .34
 const GLOVE_RADIUS := .16
-const DIVE_SPEED := 7.6
+const DIVE_SPEED := 6.8
 const GRAVITY := 18.0
 const DIVE_ROLL := 1.22
 const RECOVERY_SECONDS := .60
@@ -14,6 +18,7 @@ var rig: Skeleton3D
 var state := State.POSITION
 var age := 0.0
 var threat_age := 0.0
+var threat_speed := 0.0
 var prediction: Dictionary = {}
 var intercept := Vector3.ZERO
 var defense_velocity := Vector3.ZERO
@@ -89,16 +94,16 @@ func position_target() -> Vector3:
 	var forwardness := depth_to_ball/maxf(relative.length(),.01)
 	var depth := minf(lerpf(.35,2.4,forwardness*forwardness),maxf(.35,depth_to_ball-.7))
 	var plane_x := goal.x+attack()*depth
-	var bisector := ((goal+Vector3(0,0,-3.4)-ball_at).normalized()+(goal+Vector3(0,0,3.4)-ball_at).normalized()).normalized()
-	var target := Vector3(plane_x,0,signf(ball_at.z)*3.05)
+	var bisector := ((goal+Vector3(0,0,-GOAL.HALF_WIDTH)-ball_at).normalized()+(goal+Vector3(0,0,GOAL.HALF_WIDTH)-ball_at).normalized()).normalized()
+	var target := Vector3(plane_x,0,signf(ball_at.z)*(GOAL.HALF_WIDTH-.35))
 	if absf(bisector.x) > .001:
 		var distance := (plane_x-ball_at.x)/bisector.x
 		if distance > 0: target = ball_at+bisector*distance
-	target.x = clampf(target.x,-23.65,23.65); target.z = clampf(target.z,-3.05,3.05)
+	target.x = clampf(target.x,-23.65,23.65); target.z = clampf(target.z,-(GOAL.HALF_WIDTH-.35),(GOAL.HALF_WIDTH-.35))
 	return target
 
 func reset() -> void:
-	state = State.POSITION; age = 0; threat_age = 0; holding = false; contact_authorized = false
+	state = State.POSITION; age = 0; threat_age = 0; threat_speed = 0; holding = false; contact_authorized = false
 	prediction.clear(); last_contact.clear(); previous_hands.clear(); hands.clear(); feet.clear(); sample_epoch = -1
 	defense_velocity = Vector3.ZERO; defense_facing = Vector3(attack(),0,0)
 	dive_side = 0; throw_released = false; dive_landing = false; landed_age = -1; posture_drop = 0
@@ -116,7 +121,12 @@ func change(next: State) -> void:
 	if next == State.LAND: landed_age = -1
 	state = next; age = 0
 	if next != State.LAND: player.current_clip = ""
-	if next == State.RECOVER: threat_age = 0; prediction.clear()
+	if next == State.RECOVER: threat_age = 0; threat_speed = 0; prediction.clear()
+
+func reaction_seconds() -> float:
+	# Retain the fastest observed shot speed so air drag cannot erase the delay.
+	var strength := clampf(inverse_lerp(POWER_REACTION_START_SPEED,POWER_REACTION_FULL_SPEED,threat_speed),0,1)
+	return REACTION_SECONDS+POWER_REACTION_EXTRA_SECONDS*strength*strength
 
 func predict_plane(plane_x: float) -> Dictionary:
 	return _predict_plane(Vector3(plane_x,0,0),Vector3(attack(),0,0))
@@ -172,21 +182,24 @@ func prepare(delta: float) -> void:
 		elif state == State.REACH and age > .65: change(State.RECOVER)
 		return
 	if not player.action.is_empty() or game.carrier != null or not in_area():
-		prediction.clear(); threat_age = 0; change(State.POSITION); return
+		prediction.clear(); threat_age = 0; threat_speed = 0; change(State.POSITION); return
 	var forward := ball_direction()
 	prediction = _predict_plane(player.global_position+forward*.5,forward)
 	if not prediction.is_empty():
 		var goal := predict_plane(-attack()*24)
-		var goal_threat: bool = not goal.is_empty() and absf(goal.point.z) <= 3.7 and goal.point.y <= 2.8
+		var goal_threat: bool = not goal.is_empty() and absf(goal.point.z) <= GOAL.HALF_WIDTH+game.BALL_RADIUS and goal.point.y <= GOAL.HEIGHT+game.BALL_RADIUS
 		var close_cross: bool = game.flat_distance(player.position,game.ball.position) < 4 and prediction.point.y < 2.8
 		if not goal_threat and not close_cross: prediction.clear()
 	# Pick up a nearby loose slow ball by reaching down, never by a body radius.
 	if prediction.is_empty() and game.ball.linear_velocity.length() < 4 and game.flat_distance(player.position,game.ball.position) < 1.3:
 		prediction = {"point":game.ball.position,"time":.3,"velocity":game.ball.linear_velocity}
 	if prediction.is_empty():
-		threat_age = 0; change(State.POSITION); return
+		threat_age = 0; threat_speed = 0; change(State.POSITION); return
+	if game.recent_shot_time > 0 and game.recent_shot_team != player.team:
+		var velocity: Vector3 = game.ball.linear_velocity
+		threat_speed = maxf(threat_speed,Vector2(velocity.x,velocity.z).length())
 	threat_age += delta; change(State.PREPARE)
-	if threat_age < REACTION_SECONDS or prediction.time > COMMIT_SECONDS: return
+	if threat_age < reaction_seconds() or prediction.time > COMMIT_SECONDS: return
 	intercept = prediction.point
 	defense_facing = ball_direction(); dive_landing = false
 	var left := Vector3.UP.cross(defense_facing)
@@ -215,10 +228,10 @@ func command() -> Dictionary:
 			player.request_kick("pass",game.pass_aim(player),.6)
 		return {"move":Vector3.ZERO,"sprint":false}
 	var target := position_target()
-	if not prediction.is_empty():
+	if not prediction.is_empty() and threat_age >= reaction_seconds():
 		var forward := ball_direction()
 		target = prediction.point-forward*.5
-		target.z = clampf(target.z,-3.05,3.05)
+		target.z = clampf(target.z,-(GOAL.HALF_WIDTH-.35),(GOAL.HALF_WIDTH-.35))
 	elif game.carrier == null and game.ball.linear_velocity.length() < 4 and game.flat_distance(player.position,game.ball.position) < 3 and game.ball.position.x*attack() < -17 and absf(game.ball.position.z) < 5:
 		target = game.ball.position
 	target.x = clampf(target.x,-23.65,23.65)

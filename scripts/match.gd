@@ -1,4 +1,5 @@
 extends Node3D
+const GOAL = preload("res://scripts/goal_dimensions.gd")
 const PLAYER = preload("res://scripts/footballer.gd")
 const STADIUM = preload("res://scripts/stadium.gd")
 const HUD = preload("res://scripts/hud.gd")
@@ -273,9 +274,9 @@ func _create_ball() -> void:
 func _goal_sensor(side: int) -> void:
 	var area := Area3D.new(); area.name = "GolDireito" if side > 0 else "GolEsquerdo"
 	area.collision_layer = 0; area.collision_mask = 4
-	area.position = Vector3(side*24.75, 1.25, 0)
+	area.position = Vector3(side*24.75, GOAL.HEIGHT*.5, 0)
 	var collision := CollisionShape3D.new(); var shape := BoxShape3D.new()
-	shape.size = Vector3(1.4, 2.5, 6.6); collision.shape = shape; area.add_child(collision)
+	shape.size = Vector3(1.4, GOAL.HEIGHT, GOAL.WIDTH); collision.shape = shape; area.add_child(collision)
 	add_child(area)
 	area.body_entered.connect(func(body):
 		if body == ball: goal_candidates[0 if side < 0 else 1] = true)
@@ -712,7 +713,7 @@ func _check_lines() -> void:
 	if not live(): return
 	var at := ball.position
 	# Whole sphere must cross the white line, below the crossbar and between the posts.
-	if absf(at.x) > 24 + BALL_RADIUS and absf(at.z) < 3.4-BALL_RADIUS and at.y < 2.5-BALL_RADIUS:
+	if absf(at.x) > 24 + BALL_RADIUS and absf(at.z) < GOAL.HALF_WIDTH-BALL_RADIUS and at.y < GOAL.HEIGHT-BALL_RADIUS:
 		var sensor_index := 1 if at.x > 0 else 0
 		if goal_candidates[sensor_index]:
 			goal(0 if at.x > 0 else 1); return

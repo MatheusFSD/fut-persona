@@ -12,6 +12,15 @@ func run() -> void:
 	game = load("res://scenes/main.tscn").instantiate(); root.add_child(game)
 	game.set_physics_process(false); game.muted = true; game.hud.hide()
 	for actor in game.players: actor.set_physics_process(false); actor.collision_layer = 0; actor.collision_mask = 0
+	var frame := get_nodes_in_group("goal_frame")
+	check(frame.size() == 6,"two goals each have two posts and a crossbar")
+	for body in frame:
+		var shape: CylinderShape3D = body.get_child(0).shape
+		check(is_equal_approx(shape.radius,.06),"posts and crossbar have official 12cm diameter")
+		if absf(body.position.z) > 1:
+			check(is_equal_approx(absf(body.position.z)-shape.radius,3.66),"inner post faces provide 7.32m clear width")
+		else:
+			check(is_equal_approx(body.position.y-shape.radius,2.44),"crossbar underside provides 2.44m clear height")
 	var nets := get_nodes_in_group("goal_net_visual"); var walls := get_nodes_in_group("goal_net_body")
 	check(nets.size() == 2 and walls.size() == 6,"both goals have animated wires and three native containment walls")
 	var right = nets.filter(func(net): return net.position.x > 0)[0]
@@ -28,7 +37,7 @@ func run() -> void:
 		panels[roundi(color.a*2)] += 1
 	check(anchored > 100 and moving > 100 and panels.all(func(n): return n > 100),"real vertices encode fixed borders, free centers and all three panels")
 	for panel in 3:
-		var edges := [Vector3(0,2.5,0),Vector3(1.8,.06,0),Vector3(.9,1.28,3.4)] if panel == 0 else [Vector3(0,1,0),Vector3(.5,.035,0),Vector3(.9,1.28,0)]
+		var edges := [Vector3(0,2.5,0),Vector3(1.8,.06,0),Vector3(.9,1.28,3.72)] if panel == 0 else [Vector3(0,1,0),Vector3(.5,.035,0),Vector3(.9,1.28,0)]
 		check(edges.all(func(p): return right.pin_weight(p,panel) < .001),"frame and ground anchors remain pinned on panel "+str(panel))
 	game.phase = "playing"; game.ball.freeze = false
 	var center: Vector3 = right.to_global(Vector3(.9,1.28,0))

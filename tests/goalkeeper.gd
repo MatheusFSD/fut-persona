@@ -29,6 +29,8 @@ func shoot(power: float, z := 0.0, start := 12.0) -> void:
 	await ticks(2)
 	game.ball.freeze = false
 	game.strike(shooter,Vector3(toward*25,0,z),"shot",power)
+	# Test physical reach in isolation; power-shot delay has its own suite.
+	game.recent_shot_time = 0
 	actor.set_physics_process(true); game.set_physics_process(true)
 func proof(label: String) -> void:
 	check(not keeper.last_contact.is_empty(),"actual glove evidence exists: "+label)
