@@ -1,6 +1,8 @@
 extends SceneTree
 const ROSTER = preload("res://scripts/roster_loader.gd")
 const APPEARANCE = preload("res://scripts/player_appearance.gd")
+const PROFILE = preload("res://scripts/player_data.gd")
+const ATTRIBUTES := ["velocidade","chute","tecnica","passe","defesa","folego","reflexos"]
 var checks := 0
 var failures: Array[String] = []
 
@@ -11,9 +13,53 @@ func check(condition: bool, label: String) -> void:
 	checks += 1
 	if not condition: failures.append(label); push_error("FAIL "+label)
 
+func valid_attribute(value: Variant) -> bool:
+	# Godot's JSON parser represents JSON numbers as floats, including integers.
+	return (value is int or value is float) and is_finite(float(value)) and float(value) == floorf(float(value)) and value >= 1 and value <= 99
+
+func visual_signature(profile: Resource, include_height := true) -> String:
+	# Normalize named/hex colors through the loaded Color, never the source string.
+	var parts: Array = [profile.tipo_corpo,profile.cor_pele,profile.tipo_cabelo,profile.cor_cabelo.to_html()]
+	if include_height: parts.insert(1,roundi(profile.altura*100))
+	return str(parts)
+
 func run() -> void:
+	var document: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ROSTER.DEFAULT_PATH))
+	check(document.jogadores.size() == 20,"twenty player records")
+	var record_signatures: Array[String] = []
+	var styles: Array[String] = []
+	for record: Dictionary in document.jogadores:
+		var label := String(record.id)
+		check(String(record.nome).length() >= 3 and String(record.nome).length() <= 5,"short HUD card name: "+label)
+		for attribute: String in ATTRIBUTES:
+			check(record.has(attribute) and valid_attribute(record.get(attribute)),"direct integer attribute 1..99: "+label+"/"+attribute)
+		if record.posicao == "goleiro":
+			check(valid_attribute(record.get("reflexos")) and record.reflexos >= 80 and record.reflexos <= 88,"bounded goalkeeper reflexes: "+label)
+		var profile: Resource = PROFILE.from_dictionary(record)
+		check(profile != null,"valid historical appearance: "+label)
+		if profile == null: continue
+		var signature := visual_signature(profile)
+		check(signature not in record_signatures,"unique normalized visual signature across all nations: "+label)
+		record_signatures.append(signature)
+		var style := visual_signature(profile,false)
+		check(style not in styles,"appearance differs beyond height and kit: "+label)
+		styles.append(style)
+		for attribute: String in ATTRIBUTES:
+			check(profile.get(attribute) == record.get(attribute),"direct attribute reaches profile: "+label+"/"+attribute)
+	check(record_signatures.size() == 20,"all twenty appearances validated")
+	var named_color: Dictionary = document.jogadores[1].duplicate(true)
+	var hex_color: Dictionary = named_color.duplicate(true)
+	hex_color.cor_cabelo = PROFILE.HAIR_COLORS[named_color.cor_cabelo].to_html()
+	check(visual_signature(PROFILE.from_dictionary(named_color)) == visual_signature(PROFILE.from_dictionary(hex_color)),"named and hex hair colors share the same signature")
 	var catalog := ROSTER.read_catalog()
 	check(catalog.teams.size() == 4 and catalog.players.size() == 4,"four national rosters")
+	var loaded_signatures: Array[String] = []
+	for lineup: Array in catalog.players.values():
+		for profile: Resource in lineup:
+			var signature := visual_signature(profile)
+			check(signature not in loaded_signatures,"loaded appearance distinct even for shared models: "+String(profile.id))
+			loaded_signatures.append(signature)
+	check(loaded_signatures.size() == 20,"catalog keeps twenty distinct appearances")
 	var combinations := 0
 	for home in 4:
 		for away in 4:
@@ -26,16 +72,12 @@ func run() -> void:
 					check(data.players.size() == 10 and data.teams[0].id == first.id and data.teams[1].id == second.id,"match assembly preserves sides")
 					for side in 2:
 						var team: Dictionary = data.teams[side]
-						var bodies: Array = []; var skins: Array = []
 						for slot in 5:
 							var p: Resource = data.players[side*5+slot]
 							check(String(p.time) == team.id and p.posicao == slot,"lineup keeps team and role")
-							bodies.append(p.tipo_corpo); skins.append(p.cor_pele)
 							var mat := APPEARANCE.material_for(p,team)
 							check(mat.get_shader_parameter("shirt_color") == Color(team.camisa_goleiro if slot == 0 else team.camisa),"selected kit colors reach player material")
 							check(mat.get_shader_parameter("goalkeeper") == (slot == 0),"goalkeeper sleeves follow role")
-						bodies.sort(); skins.sort()
-						check(bodies == [0,1,1,2,2] and skins == [0,1,2,3,4],"three body builds and all skin tones represented")
 						check(team.camisa != team.camisa_goleiro,"goalkeeper has a different jersey")
 					combinations += 1
 	check(combinations == 48,"all ordered matchups and kit combinations")
@@ -45,7 +87,6 @@ func run() -> void:
 		var alternate: Dictionary = first.teams[0].duplicate(true)
 		alternate.padrao = "faixa_peito" if first.teams[0].get("padrao") != "faixa_peito" else "liso"
 		check(APPEARANCE.material_for(first.players[1],first.teams[0]) != APPEARANCE.material_for(first.players[1],alternate),"pattern participates in material cache")
-	var document: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ROSTER.DEFAULT_PATH))
 	var default_match := ROSTER.assemble_match(catalog,catalog.selection)
 	var legacy_document := {"times":default_match.teams.duplicate(true),"jogadores":[]}
 	for team: Dictionary in legacy_document.times: team.erase("uniformes")

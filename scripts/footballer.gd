@@ -9,9 +9,33 @@ const APPEARANCE = preload("res://scripts/player_appearance.gd")
 const PLAYER_ANIMATION = preload("res://scenes/player_animation.tscn")
 const GOALKEEPER = preload("res://scripts/goalkeeper.gd")
 const KEEPER_POSES = preload("res://scripts/goalkeeper_poses.gd")
+const DRIBBLE = preload("res://scripts/dribble.gd")
+var dribble = DRIBBLE.new()
 static var custom_poses: Dictionary = {}
 var game
 var profile: Resource
+## Live object attributes delegate to the persistent player record, one source of truth.
+var velocidade: int:
+	get: return profile.velocidade
+	set(value): profile.velocidade = clampi(value,1,99)
+var chute: int:
+	get: return profile.chute
+	set(value): profile.chute = clampi(value,1,99)
+var tecnica: int:
+	get: return profile.tecnica
+	set(value): profile.tecnica = clampi(value,1,99)
+var passe: int:
+	get: return profile.passe
+	set(value): profile.passe = clampi(value,1,99)
+var defesa: int:
+	get: return profile.defesa
+	set(value): profile.defesa = clampi(value,1,99)
+var folego: int:
+	get: return profile.folego
+	set(value): profile.folego = clampi(value,1,99)
+var reflexos: int:
+	get: return profile.reflexos
+	set(value): profile.reflexos = clampi(value,1,99)
 var team_definition: Dictionary
 var team := 0
 var slot := 0
@@ -105,6 +129,27 @@ func setup(match_node, side: int, index: int, spawn: Vector3, player_profile: Re
 func is_goalkeeper() -> bool:
 	return profile.is_goalkeeper()
 
+func attribute_scale(value: int, minimum := .8, maximum := 1.12) -> float:
+	return profile.attribute_scale(value,minimum,maximum)
+
+func movement_speed(sprint := false) -> float:
+	return (7.4 if sprint else 4.5)*attribute_scale(velocidade,.82,1.12)
+
+func stamina_drain() -> float:
+	return .16/attribute_scale(folego,.70,1.25)
+
+func stamina_recovery() -> float:
+	return .12*attribute_scale(folego,.75,1.25)
+
+func shot_speed(power: float) -> float:
+	return lerpf(15,26*attribute_scale(chute,.80,1.12),clampf(power,0,1))
+
+func pass_speed(distance: float) -> float:
+	return clampf(16+distance*.24,18,24)*attribute_scale(passe,.90,1.10)
+
+func tackle_recovery(sliding: bool) -> float:
+	return (1.8 if sliding else .8)/attribute_scale(defesa,.80,1.15)
+
 func _physics_process(delta: float) -> void:
 	if goalkeeper != null: goalkeeper.prepare(delta)
 	_update_player(delta)
@@ -116,6 +161,7 @@ func _update_player(delta: float) -> void:
 	number_label.visible = game.controlled == self or game.pass_target == self
 	if game.phase == "paused":
 		return
+	dribble.prepare(self,delta)
 	if fall_time >= 0:
 		fall_time += delta
 		velocity.x = 0; velocity.z = 0
@@ -159,6 +205,7 @@ func _update_player(delta: float) -> void:
 			move = reception.move
 			sprinting = reception.sprint and stamina > .08
 		control_direction = move
+		if Input.is_action_just_pressed("dribble"): request_dribble(move)
 		if Input.is_action_just_pressed("pass"): request_kick("pass", game.pass_aim(self), .5)
 		if Input.is_action_just_pressed("mouse_primary"):
 			if game.can_play_ball(self): shot_input = "mouse_primary"; charging = 0
@@ -185,33 +232,41 @@ func _update_player(delta: float) -> void:
 		move = Vector3.ZERO; sprinting = false; control_direction = Vector3.ZERO
 	if goalkeeper != null and goalkeeper.defending():
 		_animate(); return
-	stamina = clampf(stamina + (-.16 if sprinting and move.length() > .2 else .12) * delta, 0, 1)
+	stamina = clampf(stamina + (-stamina_drain() if sprinting and move.length() > .2 else stamina_recovery()) * delta, 0, 1)
 	if not action.is_empty():
 		action_time += delta
 		if action in ["shot", "pass"] and action_time >= kick_contact and not contact_done:
 			animation_tree.seek_contact(kick_contact)
 			contact_done = true; game.strike(self, kick_target, action, kick_power)
-		if action in ["slide", "tackle"] and action_time > .09 and action_time < (.55 if action == "slide" else .3):
+		if action in ["slide", "tackle"] and action_time > .09/attribute_scale(defesa,.85,1.10) and action_time < (.55 if action == "slide" else .3):
 			game.challenge(self, action == "slide")
 		if action_time >= action_length:
 			action = ""; current_clip = ""
-	var desired := move * (7.4 if sprinting else 4.5)
-	if action == "slide":
+	var desired := move * movement_speed(sprinting)
+	if action == "dribble":
+		desired = dribble.direction*DRIBBLE.SPEED*attribute_scale(tecnica,.90,1.08)
+		facing = facing.lerp(dribble.direction,minf(delta*16,1)).normalized()
+	elif action == "slide":
 		desired = facing * lerpf(11, 2.5, clampf(action_time / .85, 0, 1))
 	elif action in ["shot", "pass", "tackle"]: desired *= .22
 	if stun > 0: desired = Vector3.ZERO
-	velocity.x = move_toward(velocity.x, desired.x, 26 * delta)
-	velocity.z = move_toward(velocity.z, desired.z, 26 * delta)
+	var acceleration := 26*attribute_scale(velocidade,.85,1.12)
+	velocity.x = move_toward(velocity.x, desired.x, acceleration * delta)
+	velocity.z = move_toward(velocity.z, desired.z, acceleration * delta)
 	if goalkeeper != null and game.carrier != self and action.is_empty() and stun <= 0:
 		facing = facing.lerp(goalkeeper.look_direction(),minf(delta*12,1)).normalized()
 	elif move.length() > .1 and action.is_empty() and stun <= 0:
 		var look := move.normalized()
-		facing = facing.lerp(look, minf(delta * 18, 1)).normalized()
+		facing = facing.lerp(look, minf(delta * 18*attribute_scale(tecnica,.85,1.12), 1)).normalized()
 	avatar.rotation.y = lerp_angle(avatar.rotation.y, atan2(-facing.x, -facing.z) + visual_offset, minf(delta*20, 1))
 	move_and_slide()
 	position.x = clampf(position.x, -25.4, 25.4)
 	position.z = clampf(position.z, -15.4, 15.4)
+	dribble.finish(self,delta)
 	_animate()
+
+func request_dribble(direction := Vector3.ZERO) -> bool:
+	return dribble.start(self,direction)
 
 func request_kick(kind: String, target: Vector3, power: float) -> bool:
 	if not game.live() and not game.is_set_piece_taker(self): return false
@@ -243,12 +298,13 @@ func request_tackle(sliding: bool) -> bool:
 	if cooldown > 0 or not action.is_empty() or stun > 0: return false
 	action = "slide" if sliding else "tackle"
 	action_time = 0; action_length = 1.05 if sliding else .45; contact_done = false
-	cooldown = 1.8 if sliding else .8
+	cooldown = tackle_recovery(sliding)
 	cancel_charge(); current_clip = ""
 	game.dust(position)
 	return true
 
 func reset_at(at: Vector3) -> void:
+	dribble.reset(self)
 	position = at; velocity = Vector3.ZERO; action = ""; current_clip = ""
 	fall_time = -1; stun = 0; cooldown = .35; cancel_charge()
 	facing = Vector3.RIGHT if team == 0 else Vector3.LEFT
@@ -274,6 +330,9 @@ func cancel_charge() -> void:
 
 func _animate() -> void:
 	if stun > 0: _play("football/Jump_Land", 1.4)
+	elif action == "dribble":
+		animation_tree.locomotion(DRIBBLE.SPEED)
+		current_clip = "dribble"
 	elif goalkeeper != null and not goalkeeper.pose_clip().is_empty(): _play(goalkeeper.pose_clip())
 	elif action == "slide":
 		if action_time < .2: _play("football/Slide_Start", 1.5)

@@ -3,6 +3,7 @@ extends "res://tests/goalkeeper.gd"
 func run() -> void:
 	for side in 2:
 		await setup(side)
+		actor.reflexos = 70 # Isolate the power-shot penalty from roster reflex ratings.
 		game.ball.position = Vector3(-keeper.attack()*18,.4,0)
 		game.ball.linear_velocity = Vector3(-keeper.attack()*26,0,0)
 		game.recent_shot_team = 1-side; game.recent_shot_time = 3

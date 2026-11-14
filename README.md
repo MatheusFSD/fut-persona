@@ -2,7 +2,7 @@
 
 Jogo 3D de futebol de várzea para **Godot 4**, validado no **Godot 4.7.2**, com renderizador Compatibility. Escolha **Brasil, Argentina, Alemanha ou França**, com **dois uniformes por seleção**, para uma partida **5 contra 5**, de **3 minutos**. Você controla a seleção da esquerda no menu e ataca para a direita.
 
-No menu inicial, escolha sua seleção, o adversário e o uniforme de cada lado. Escolher uma seleção que já ocupa o outro lado troca os times de lugar. Na pausa ou no fim da partida, **Trocar seleções / uniformes** volta à configuração. Os elencos são fictícios, com cinco jogadores por país e todos os biotipos e tons de pele representados para testar o sistema.
+No menu inicial, escolha sua seleção, o adversário e o uniforme de cada lado. Escolher uma seleção que já ocupa o outro lado troca os times de lugar. Na pausa ou no fim da partida, **Trocar seleções / uniformes** volta à configuração. Os elencos têm cinco jogadores fictícios por país, com aparência estilizada e estilo de jogo inspirados em atletas históricos. Cada atleta tem uma combinação própria de corpo, altura, pele e cabelo, além de sete atributos individuais. As referências estão em [docs/roster_references.md](docs/roster_references.md).
 
 | Seleção | Uniforme 1 | Uniforme 2 |
 | --- | --- | --- |
@@ -28,9 +28,10 @@ Para editar, abra **project.godot** no Godot, aguarde a importação e pressione
 | WASD / setas | Movimentar |
 | Posição do mouse no campo | Mirar o chute e o passe, em qualquer direção |
 | Shift | Correr; solte para trotar e recuperar o fôlego |
+| E + direção lateral | Drible de corte com a bola; sem direção lateral, corta para longe do marcador |
 | Mouse esquerdo, com bola | Segure para carregar o chute e solte para bater |
 | Mouse esquerdo, sem bola | Carrinho |
-| Mouse direito, com bola | Passe rasteiro forte na direção do mouse |
+| Mouse direito / C, com bola | Passe rasteiro forte na direção do mouse |
 | Mouse direito, sem bola | Desarme em pé |
 | Clique do scroll (botão do meio) | Trocar para outro jogador de linha próximo à bola |
 | V | Alternar câmera próxima / mais aberta |
@@ -38,6 +39,9 @@ Para editar, abra **project.godot** no Godot, aguarde a importação e pressione
 | R | Nova partida |
 | M | Ligar / desligar efeitos sonoros |
 | F1 | Mostrar / ocultar ajuda |
+| I | Mostrar / ocultar atributos do jogador selecionado |
+
+O **drible de corte (E)** dura 0,40 s e, com Técnica 70, custa 18% de fôlego e tem intervalo de 1,15 s. Só funciona com posse, bola baixa e jogador de linha livre para agir. O marcador sofre 0,30 s de desequilíbrio apenas quando o atacante realmente ultrapassa sua linha com separação lateral; o corte não garante posse nem impede desarmes. Sem indicação de lado, o corte escolhe o lado oposto ao marcador à frente. Use uma direção lateral em relação à orientação atual do jogador para escolher o lado. A reação **ENTORTOU!** aparece apenas no drible bem-sucedido.
 | F2 | Modo torcida: os dois times passam a jogar sozinhos |
 
 ## A partida
@@ -68,9 +72,55 @@ O campo tem gramado verde bem cuidado, faixas suaves de corte e 2.600 pequenos t
 
 Prévias: `qa/campo-alambrado-completo.png`, `qa/campo-alambrado-detalhe.png`, `qa/campo-escanteio-pronto.png`, `qa/campo-tiro-de-meta-pronto.png` e `qa/campo-falta-pronta.png`. A saída com espera de dois segundos está em `qa/campo-bola-fora.gif`.
 
+## Retratos individuais
+
+Os vinte jogadores têm retrato e comemoração, vindos de `fut_persona_todas_imagens_aprovadas.zip`. O retrato aparece no menu de seleções, no cartão do atleta controlado, na pausa e na ficha aberta com **I**; a comemoração aparece no gol e no apito final. As **expressões do ZIP não entram no jogo**: são reservadas para a futura visual novel, assim como `retratos_iniciais`.
+
+| Posição | Brasil | Argentina | Alemanha | França |
+| --- | --- | --- | --- | --- |
+| Goleiro | Ivo → Rafa | Tano → Tomás | Falk → Lukas | Fabi → Hugo |
+| Zagueiro | Zeca → Douglas | Muro → Bruno | Jaro → Jonas | Daro → Malik |
+| Ala esquerda | Cadu → Tico | Fito → Mateo | Miro → Emil | Zian → Noé |
+| Ala direita | Digu → Juninho | Lito → Santiago | Tilo → Felix | Rivo → Louis |
+| Atacante | Roni → Cauã | Basti → Nicolás | Klas → Leon | Enzo → Amadou |
+
+A tabela liga cada jogador do cadastro ao nome do personagem na arte, escolhido pelo porte, cabelo e pele mais próximos; os goleiros vêm pela camisa diferente. Para trocar um par, edite o caminho no cadastro. Os nomes, alturas e atributos continuam os do cadastro revisado. O porte, a pele e o cabelo dos modelos 3D seguem a arte: por exemplo, Cauã tem moicano preto, Leon moicano ruivo e Amadou moicano loiro. Duas escolhas desempatam aparências que ficariam iguais: Hugo tem cabelo raspado e Noé careca.
+
+Cada registro de `data/match_roster.json` pode receber `retrato`, `comemoracao` e `retrato_regiao`, um recorte normalizado `[x, y, largura, altura]` usado nas miniaturas. Exemplo:
+
+```json
+"retrato": "res://assets/portraits/brasil/rafa.png",
+"comemoracao": "res://assets/portraits/brasil/comemoracoes/rafa.png",
+"retrato_regiao": [0.2, 0, 0.6, 0.6]
+```
+
+O retrato acompanha o ID do jogador ao trocar lado, uniforme ou atleta controlado. Jogadores sem arte exibem uma silhueta com número. Reinicie o jogo após atualizar o cadastro. As texturas são compartilhadas por caminho, sem uma cópia para cada cartão.
+
+As imagens originais têm 1254 px, mais do que a tela usa. `tools/import_fut_persona.gd` copia do ZIP os retratos em 512 px e as comemorações em 768 px, com mipmaps, somando cerca de 14 MB: `godot --headless --path . --script res://tools/import_fut_persona.gd -- <caminho do zip>`.
+
+Testes: `godot --headless --path . --script tests/player_portraits.gd`. Prévias: `godot --path . --script tests/capture_player_portraits.gd`, com arquivos `qa/retratos-*.png`.
+
+## Atributos individuais
+
+Cada objeto de jogador expõe diretamente `velocidade`, `chute`, `tecnica`, `passe`, `defesa`, `folego` e `reflexos`, inteiros de **1 a 99**. Exemplo: `jogador.chute = 90`. Os atributos delegam ao `FootballPlayerData` do atleta, mantendo uma única fonte dos valores; ficam salvos como campos diretos em `data/match_roster.json`. Registros antigos sem os campos recebem **70**, o ponto neutro do equilíbrio anterior. Valores inválidos no JSON são rejeitados; atribuições pelo objeto são limitadas à faixa válida.
+
+| Atributo | Efeito |
+| --- | --- |
+| Velocidade | Corrida, trote, aceleração e previsão de chegada ao passe |
+| Chute | Velocidade máxima do chute; a carga e a mira continuam sob controle do jogador |
+| Técnica | Controle da bola, recepção, mudança de direção, velocidade/custo/intervalo do corte |
+| Passe | Velocidade do passe e facilidade de domínio pelo recebedor |
+| Defesa | Tempo de entrada do desarme e recuperação entre tentativas |
+| Fôlego | Consumo de energia na corrida e recuperação quando descansa |
+| Reflexos | Reação do goleiro, preservando a penalidade adicional de chutes fortes |
+
+Pressione **I** para abrir a ficha com os sete valores do jogador selecionado. A ficha acompanha a troca de jogador. As avaliações são autorais para este arcade, não notas oficiais. Os multiplicadores são limitados para preservar o controle e a física.
+
+Teste: `godot --headless --path . --script tests/player_attributes.gd`. Capturas: `godot --path . --script tests/capture_roster_attributes.gd`.
+
 ## Goleiros: previsão, estados e contato das mãos
 
-Os dois goleiros têm um controlador próprio em **`scripts/goalkeeper.gd`**. A previsão acompanha a velocidade atual da bola, a gravidade, o amortecimento do ar e uma aproximação dos quiques no chão, em passos de 1/120 s e horizonte de 1,8 s. Ela estima o ponto e o tempo de travessia diante do goleiro e verifica se a bola segue para a região do gol. Não prevê futuras intervenções de outros jogadores nem altera a trajetória real. O posicionamento acompanha esse ponto; a reação demora 0,12 s, e a tentativa é iniciada quando faltam até 0,34 s para a chegada. Deslocamento, salto e alcance dos braços são limitados, permitindo gols quando não há tempo ou alcance suficiente.
+Os dois goleiros têm um controlador próprio em **`scripts/goalkeeper.gd`**. A previsão acompanha a velocidade atual da bola, a gravidade, o amortecimento do ar e uma aproximação dos quiques no chão, em passos de 1/120 s e horizonte de 1,8 s. Ela estima o ponto e o tempo de travessia diante do goleiro e verifica se a bola segue para a região do gol. Não prevê futuras intervenções de outros jogadores nem altera a trajetória real. O posicionamento acompanha esse ponto; a reação base depende de Reflexos (0,18 s com atributo 70), com até 0,22 s adicionais contra chutes fortes, e a tentativa é iniciada quando faltam até 0,34 s para a chegada. Deslocamento, salto e alcance dos braços são limitados, permitindo gols quando não há tempo ou alcance suficiente.
 
 Os estados são **posicionar, preparar, alcançar, mergulhar, saltar, encaixar, segurar, repor e recuperar**. A `AnimationTree` tem sete novos estados `Keeper*`; as poses originais de base ficam em `scripts/goalkeeper_poses.gd` e são compartilhadas por altura. Os movimentos usam os mesmos 65 ossos, sem alterar malhas, pesos ou hierarquia. Dois `TwoBoneIK3D` ajustam os braços ao alvo; outros dois mantêm os pés apoiados ao abaixar o corpo para uma defesa rasteira. O salto desloca o `CharacterBody3D` com gravidade, e o mergulho combina impulso lateral, elevação e inclinação visual do corpo. A cápsula de colisão abaixa junto com o corpo ao agachar ou mergulhar, evitando uma barreira invisível na altura da postura em pé.
 
@@ -119,6 +169,12 @@ Chutes fortes têm um breve recuo da lente; traves, defesas, desarmes e gols dã
 `scripts/juice.gd` reúne os sons e os ajustes: `SFX_VOLUME_DB`, `CROWD_VOLUME_DB`, `camera_strength` (0 desliga somente o movimento da câmera), `CAMERA` e `FOV_PUNCH`. A variação de áudio usa seu próprio gerador aleatório, sem consumir o da IA. Os 26 WAVs originais somam aproximadamente 787 KB e são compartilhados entre eventos. Foram gerados sem amostras ou downloads por `python3 tools/build_juicy_audio.py`; o jogo pronto usa somente recursos nativos do Godot.
 
 Prévia do áudio realmente mixado pelo Godot: `qa/juicy-sons.wav` (apito, passes, chutes, trave, defesa, desarme e gol). Prévia de câmera: `qa/juicy-camera.gif`. Medições dos arquivos: `docs/juicy_audio_manifest.json`.
+
+### Hit-stop
+
+Contatos fortes congelam o mundo por um instante, a 5% da velocidade: chutes médios e fortes, carrinho limpo ou falta de carrinho, trave, defesa e bola na rede. A duração cresce com a força, até **0,09 s** contados em tempo real a partir do contato. Chutes fracos, passes e desarmes em pé não congelam, para o jogo continuar fluido; há um intervalo de 0,18 s entre congelamentos. O efeito vale para os dois times e continua com o som desligado.
+
+A física continua em passos muito curtos, sem alterar a velocidade da bola. O congelamento multiplica a câmera lenta dos carrinhos e chutes em vez de substituí-la, e todos gravam a velocidade por `scripts/hit_stop.gd`, para nenhuma cinemática guardar a velocidade congelada. A pausa cancela o congelamento em andamento; menu e reposição também o limpam. Ajustes em `scripts/hit_stop.gd`: `FREEZE_SCALE`, `SECONDS`, `MIN_SECONDS` e `COOLDOWN`. `hit_stop_enabled` em `scripts/juice.gd` desliga o efeito.
 
 ## Carrinho cinematográfico
 
@@ -177,29 +233,48 @@ Chutes, passes, desarmes, defesas, traves e recepções rápidas também geram p
 
 Prévia: `qa/bola-expressiva.gif`. Capturas: `qa/bola-contato-passe.png`, `qa/bola-contato-chute.png`, `qa/bola-rastro.png` e `qa/bola-contato-trave.png`.
 
+A bola também **achata na batida e estica em alta velocidade**. O achatamento vem da mudança real de velocidade em um passo da física, então chutes, quiques, traves, defesas e domínios entram sem eventos próprios. Ele segue o eixo da batida, oscila uma vez em uma mola amortecida e termina em cerca de meio segundo; o estiramento acompanha a direção da bola a partir de 12 m/s. O volume é preservado, o desenho da bola continua girando e o lado que recebeu o golpe fica no lugar, sem descolar do gramado. Só a malha visual é deformada: a esfera de colisão e o `RigidBody3D` não mudam. Na condução, as forças do domínio não contam como batida. Ajustes em `scripts/ball_fx.gd`: `SQUASH_MAX`, `SQUASH_MIN_KICK`, `SQUASH_MIN_KICK_CARRIED`, `SQUASH_FULL_KICK`, `SQUASH_SPRING`, `SQUASH_DAMPING`, `STRETCH_MAX`, `STRETCH_MIN_SPEED` e `STRETCH_FULL_SPEED`.
+
 ## HUD e menus arcade
 
-A interface mistura arcade dos anos 80 com recortes gráficos inspirados em Persona: preto e creme, rosa, ciano e amarelo, painéis inclinados, sombras deslocadas e retículas. O menu tem título em movimento, letreiro rolante, botão pulsante e as bandeiras das quatro seleções nos cartões e nas opções. O placar também usa bandeiras e numerais pixelados; o cartão do jogador conserva nome, posição, biotipo e altura. Fôlego, carga de chute, minimapa, pausa, ajuda e resultado seguem a mesma identidade.
+A interface passa a ideia do jogo: jovens com sonhos, se divertindo num torneio no Rio. É arcade com a rebeldia do recorte de papel, em preto e creme, rosa, ciano e amarelo. **Nenhum painel é um paralelogramo**: todos têm cantos desencontrados, mordidas, degraus e pontas, gerados em `scripts/ui_shapes.gd`.
 
-Ao marcar um gol, cada letra de **GOOOL!** entra de baixo para cima com atraso e oscilação, formando uma onda. A comemoração tem faixa diagonal, um impacto inicial de luz, raios e confetes, além da bandeira e do nome de quem marcou. Ela termina junto com os 2,8 segundos da comemoração e dá lugar à saída de bola. Os efeitos ficam na camada 2D e não alteram câmera, física, placar ou tempo de jogo.
+| Elemento | Forma |
+| --- | --- |
+| Painéis, plaquinhas e bandeiras | Papel rasgado (`torn`), com lados que nunca são paralelos |
+| Títulos | Letras recortadas de revista, cada uma com papel, fonte e inclinação próprios |
+| Falas e avisos | Balão recortado com rabo de raio apontando para quem fala (`balloon`) |
+| Explosões, contagem e VS | Estrelas irregulares (`burst`), que tremem como animação feita à mão |
+| Fôlego, ficha e estatísticas | Cunhas que engrossam ao longo do comprimento (`wedge`) |
+| Rio de Janeiro | Ondas do calçadão de Copacabana, Pão de Açúcar, sol e pipas com rabiola no menu; pipas e corações nos confetes |
 
-Tudo é desenhado com `Control`, `CanvasItem`, `StyleBoxFlat`, `OptionButton` e fontes do sistema, sem plugin. Os numerais 5×7 e as quatro bandeiras pixeladas são desenhos originais em código. Cada bandeira é uma textura de 64×40 gerada uma vez e compartilhada. A tipografia de destaque procura Impact, Arial Black ou DejaVu Sans no sistema; arquivos de fontes do Windows não são redistribuídos. O layout é escalado junto com os controles nativos e foi conferido em 960×600, 1600×900 e 1024×768.
+O card do jogador tem o rosto saindo para fora do painel, e as ações disponíveis abrem em leque a partir dele, com o botão do mouse ou a tecla de cada uma. Na ficha (**I**), as linhas descem em escada. Os avisos no topo falam em balões. O placar pula e explode quando muda, e o relógio ganha uma explosão nos últimos 30 segundos.
 
-Prévias: `qa/arcade-menu.png`, `qa/arcade-bandeiras.png`, `qa/arcade-partida.png`, `qa/arcade-chute.png`, `qa/arcade-pausa.png` e `qa/arcade-resultado.png`. A comemoração animada está em `qa/arcade-gol.gif`. `scripts/hud.gd` desenha e anima a interface; `scripts/ui_flags.gd` fornece as bandeiras compartilhadas.
+Ao marcar um gol, a comemoração de **quem marcou** entra pelo lado do seu time, por cima de uma faixa rasgada, com o nome em letras recortadas, a bandeira, o placar e o balão "FULANO BALANÇOU A REDE!". Cada letra de **GOOOL!** entra de baixo para cima com atraso e oscilação, formando uma onda, com raios e confetes. O gol é creditado a quem tocou por último na bola. Num gol contra, quem comemora é o atacante do time beneficiado, sem somar gol para ninguém. No apito final, o artilheiro de cada time aparece ao lado do placar, e quem perdeu fica em silhueta escura, esperando a revanche.
+
+As reações em campo mantêm os textos, e cada lance tem silhueta e símbolo próprios (veja a tabela abaixo). O texto delas usa uma fonte só e menos inclinação, para ser lido no meio da jogada; a mistura de fontes fica nos títulos. Os efeitos ficam na camada 2D e não alteram câmera, física, placar ou tempo de jogo.
+
+Tudo é desenhado com `Control`, `CanvasItem`, `OptionButton` e fontes do sistema, sem plugin. Os controles nativos continuam funcionando, com fundo transparente sobre a forma desenhada. As formas são funções puras de uma semente, então cada painel mantém o mesmo contorno entre os quadros. A tipografia procura Impact, Arial Black e Georgia no sistema, com DejaVu como alternativa; arquivos de fontes do Windows não são redistribuídos. O layout é escalado junto com os controles e foi conferido em 960×600, 1024×768 e 1440×900.
+
+Polígonos seguidos entram num único lote de triângulos (`_fill` e `_flush` em `scripts/hud.gd`), porque cada polígono avulso custaria uma chamada de desenho. Ao desenhar qualquer outra coisa entre polígonos, chame `_flush()` antes. Com o lote e as formas memorizadas, a HUD custa de 3 a 5 ms por quadro na máquina de desenvolvimento, em 1440×900: cerca de 100 fps no menu e com quatro reações, e cerca de 120 fps em partida.
+
+`scripts/hud.gd` desenha e anima a interface; `scripts/ui_shapes.gd` fornece a geometria e `scripts/ui_flags.gd` as bandeiras compartilhadas. Testes: `tests/ui_shapes.gd` confere em 2.800 combinações de tamanho e semente se as formas podem ser desenhadas e se nenhum painel é um paralelogramo; `tests/goal_scorer.gd` confere o crédito do gol e a retomada da bola depois da pausa. As prévias `qa/arcade-*` são da interface anterior e serão renovadas na entrega final.
 
 ### Reações no local da jogada
 
-Os lances ganham etiquetas 2D no ponto do campo em que aconteceram, com recortes, ponteiro, entrada elástica, oscilação e saída suave. A posição é reprojetada a cada quadro: a etiqueta acompanha a câmera, mas permanece no local do evento quando o jogador vai embora. Avisos gerais, como modo torcida e saída de bola, continuam no topo.
+Os lances ganham etiquetas 2D no ponto do campo em que aconteceram, com recortes, raio apontando para o local, entrada elástica, oscilação e saída suave. A posição é reprojetada a cada quadro: a etiqueta acompanha a câmera, mas permanece no local do evento quando o jogador vai embora. Avisos gerais, como modo torcida e saída de bola, continuam no topo.
 
-| Lance | Reação |
-| --- | --- |
-| Carrinho limpo na bola | NA BOLA! |
-| Desarme de adversário em pé | É NOSSA! |
-| Impacto físico em poste ou travessão | NA TRAVEEE! |
-| Goleiro domina um chute adversário | MILAGRE! |
-| Chute com carga alta | WOOOOW! |
-| Falta | FOI MAL! |
-| Lateral / escanteio / tiro de meta | SAIU! / NO CANTO! / PRA FORA! |
+| Lance | Reação | Silhueta | Símbolo |
+| --- | --- | --- | --- |
+| Drible de corte bem-sucedido | ENTORTOU! | Explosão | Raios |
+| Carrinho limpo na bola | NA BOLA! | Explosão | Estrelas |
+| Desarme de adversário em pé | É NOSSA! | Balão | Corações |
+| Impacto físico em poste ou travessão | NA TRAVEEE! | Explosão | Raios |
+| Goleiro domina um chute adversário | MILAGRE! | Explosão | Estrelas |
+| Chute com carga alta | WOOOOW! | Explosão | Estrelas |
+| Falta | FOI MAL! | Balão | Exclamações |
+| Lateral / escanteio / tiro de meta | SAIU! / NO CANTO! / PRA FORA! | Papel rasgado | Exclamações / estrelas |
+| Bola solta | OPA! | Balão | Interrogações |
 
 Faltas e reposições mostram também o tipo da cobrança e a seleção que a ganhou. Há no máximo quatro etiquetas simultâneas, com duração de 1,1 a 1,6 segundos e supressão de contatos repetidos próximos. Elas pausam com a partida, são ocultadas fora da câmera e são limpas no gol, na saída ou ao trocar a partida. Colisões com chão e rede não geram aviso de trave; somente os seis corpos físicos existentes dos postes e travessões recebem essa identificação. Os efeitos não recebem cliques nem modificam a física.
 
@@ -333,10 +408,14 @@ godot --headless --path . --fixed-fps 60 --script res://tests/appearance.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/player_heights.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/national_teams.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/arcade_ui.gd
+godot --headless --path . --fixed-fps 60 --script res://tests/ui_shapes.gd
+godot --headless --path . --fixed-fps 60 --script res://tests/goal_scorer.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/local_reactions.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/restarts_fence.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/juice.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/ball_fx.gd
+godot --headless --path . --fixed-fps 60 --script res://tests/ball_squash.gd
+godot --headless --path . --fixed-fps 60 --script res://tests/hit_stop.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/slide_moment.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/foul_fall.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/shot_moment.gd

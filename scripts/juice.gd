@@ -2,11 +2,13 @@ extends Node3D
 const BALL_FX = preload("res://scripts/ball_fx.gd")
 const SLIDE = preload("res://scripts/slide_moment.gd")
 const SHOT = preload("res://scripts/shot_moment.gd")
+const HIT_STOP = preload("res://scripts/hit_stop.gd")
 ## Presentation only. Own random source, cached WAVs, native spatial voices.
 const SFX_VOLUME_DB := -5.0
 const CROWD_VOLUME_DB := -27.0
 const VOICE_COUNT := 8
 const CLIPS := {
+	"dribble":[preload("res://assets/audio/pass_1.wav"),preload("res://assets/audio/pass_2.wav"),preload("res://assets/audio/pass_3.wav")],
 	"pass":[preload("res://assets/audio/pass_1.wav"),preload("res://assets/audio/pass_2.wav"),preload("res://assets/audio/pass_3.wav")],
 	"shot":[preload("res://assets/audio/shot_1.wav"),preload("res://assets/audio/shot_2.wav"),preload("res://assets/audio/shot_3.wav")],
 	"power":[preload("res://assets/audio/power_1.wav"),preload("res://assets/audio/power_2.wav"),preload("res://assets/audio/power_3.wav")],
@@ -28,6 +30,7 @@ const FOV_PUNCH := {"shot":.30,"power":.65,"post":.70,"save":-.55,"tackle":0.0,"
 @export_range(0,1,.05) var camera_strength := 1.0
 @export var slide_cinematic_enabled := true
 @export var shot_cinematic_enabled := true
+@export var hit_stop_enabled := true
 var game
 var muted := false
 var voices: Array[AudioStreamPlayer3D] = []
@@ -86,6 +89,7 @@ func set_muted(value: bool) -> void:
 		if ambience != null: ambience.stop()
 
 func reset_presentation() -> void:
+	HIT_STOP.clear()
 	slide.cancel()
 	shot.cancel()
 	for net in get_tree().get_nodes_in_group("goal_net_visual"): net.reset()
@@ -104,6 +108,7 @@ func _process(delta: float) -> void:
 	if game.phase not in ["playing","out","celebrate","paused"]: shot.cancel()
 	shot.advance(real_delta,paused)
 	shot.observe(game.ball.global_position,game.ball.linear_velocity,game.carrier != null,game.phase)
+	HIT_STOP.advance(real_delta,paused)
 	game._advance_goal_reveal(real_delta)
 	if paused and not was_paused:
 		for voice in voices: voice.stop()
@@ -146,6 +151,7 @@ func shot_goal() -> void:
 	shot.goal_scored(game.ball.global_position,game.camera.global_transform,game.camera.fov)
 
 func shot_net(world: Vector3) -> bool:
+	if hit_stop_enabled: HIT_STOP.hit("net")
 	if not shot_cinematic_enabled: return false
 	return shot.net_impact(world,game.camera.global_transform,game.camera.fov)
 
@@ -159,6 +165,7 @@ func impact(kind: String, world: Vector3, strength := 1.0) -> bool:
 	cooldowns[kind] = .20 if kind == "post" else .10 if kind == "save" else .04
 	event_counts[kind] = event_counts.get(kind,0)+1
 	strength = clampf(strength,.25,1.0)
+	if hit_stop_enabled: HIT_STOP.hit(kind,strength)
 	ball_fx.contact(kind,world,strength)
 	if kind == "power": ball_fx.start_trail()
 	elif kind in ["post","save","tackle","goal"]: ball_fx.stop_trail()

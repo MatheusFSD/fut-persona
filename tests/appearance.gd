@@ -38,15 +38,16 @@ func run() -> void:
 		var shirt: Color = material.get_shader_parameter("shirt_color")
 		check(material.get_shader_parameter("goalkeeper") == keeper and shirt == Color(p.team_definition.camisa_goleiro if keeper else p.team_definition.camisa),"role drives long sleeves and goalkeeper kit: "+label)
 	for team in 2:
-		var skins: Array = []; var roles: Array = []
+		var skins: Array = []; var roles: Array = []; var identities: Dictionary = {}
 		var base := mesh_of(game.players[team*5])
 		var shared := true
 		for i in 5:
 			var p = game.players[team*5+i]
 			skins.append(p.profile.cor_pele); roles.append(p.profile.posicao)
+			identities[str([p.profile.tipo_corpo,p.profile.altura,p.profile.cor_pele,p.profile.tipo_cabelo,p.profile.cor_cabelo.to_html()])] = true
 			shared = shared and mesh_of(p).mesh == base.mesh
 			skins.sort()
-		check(skins == [0,1,2,3,4] and roles == [0,1,2,3,4],"roster has all tones and roles in team "+str(team))
+		check(skins.all(func(tone): return tone >= 0 and tone < 5) and roles == [0,1,2,3,4] and identities.size() == 5,"roster has five distinct player appearances and all roles in team "+str(team))
 		check(shared,"all five body variants share one mesh in team "+str(team))
 		var keeper_material: ShaderMaterial = base.get_surface_override_material(0)
 		var field_material: ShaderMaterial = mesh_of(game.players[team*5+1]).get_surface_override_material(0)

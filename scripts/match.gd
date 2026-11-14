@@ -33,6 +33,9 @@ var phase_timer := 0.0
 var elapsed := 0.0
 var score := [0, 0]
 var last_goal_team := -1
+var last_goal_scorer = null
+var last_touch_player = null
+var goals_by_player: Dictionary = {}
 var last_touch := 0
 var kick_lock := 0.0
 var released_by
@@ -54,6 +57,8 @@ var restart_is_kickoff := false
 var pending_restart: Dictionary = {}
 var paused_from := "playing"
 var paused_ball_frozen := false
+var paused_ball_velocity := Vector3.ZERO
+var paused_ball_spin := Vector3.ZERO
 var zoomed := true
 var camera_focus := Vector3(0, .35, 0)
 var auto_switch_lock := 0.0
@@ -62,6 +67,7 @@ var muted := false:
 		muted = value
 		if juice != null: juice.set_muted(value)
 var show_help := false
+var show_attributes := false
 var spectator := false
 var chasers := [null, null]
 var goal_candidates := [false, false]
@@ -70,6 +76,7 @@ var rng := RandomNumberGenerator.new()
 var recent_shot_team := -1
 var recent_shot_time := 0.0
 var ball_speed_before_step := 0.0
+var ball_visual: MeshInstance3D
 var goal_reveal_pending := false
 var goal_hold_elapsed := -1.0
 var goal_net_wait := 0.0
@@ -142,7 +149,7 @@ func selection_menu() -> void:
 	hud.sync_selection()
 
 func _inputs() -> void:
-	var mapping := {"left": [KEY_A, KEY_LEFT], "right": [KEY_D, KEY_RIGHT], "up": [KEY_W, KEY_UP], "down": [KEY_S, KEY_DOWN], "sprint": [KEY_SHIFT], "shoot": [KEY_SPACE], "pass": [KEY_E], "tackle": [KEY_F], "slide": [KEY_Q], "switch": [KEY_TAB], "pause": [KEY_ESCAPE, KEY_P], "start": [KEY_ENTER], "restart": [KEY_R], "mute": [KEY_M], "camera": [KEY_V], "help": [KEY_F1], "spectate": [KEY_F2]}
+	var mapping := {"left": [KEY_A, KEY_LEFT], "right": [KEY_D, KEY_RIGHT], "up": [KEY_W, KEY_UP], "down": [KEY_S, KEY_DOWN], "sprint": [KEY_SHIFT], "dribble": [KEY_E], "shoot": [KEY_SPACE], "pass": [KEY_C], "tackle": [KEY_F], "slide": [KEY_Q], "switch": [KEY_TAB], "pause": [KEY_ESCAPE, KEY_P], "start": [KEY_ENTER], "restart": [KEY_R], "mute": [KEY_M], "camera": [KEY_V], "help": [KEY_F1], "attributes": [KEY_I], "spectate": [KEY_F2]}
 	for action in mapping:
 		if not InputMap.has_action(action): InputMap.add_action(action)
 		for code in mapping[action]:
@@ -164,6 +171,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("mute"): muted = not muted
 	if event.is_action_pressed("camera"): zoomed = not zoomed
 	if event.is_action_pressed("help"): show_help = not show_help
+	if event.is_action_pressed("attributes"): show_attributes = not show_attributes
 	if event.is_action_pressed("spectate"):
 		spectator = not spectator
 		controlled.cancel_charge()
@@ -190,6 +198,7 @@ func formation(team: int, slot: int) -> Vector3:
 func new_match() -> void:
 	get_tree().paused = false
 	score = [0, 0]; elapsed = 0; last_goal_team = -1
+	last_goal_scorer = null; last_touch_player = null; goals_by_player.clear()
 	stats = {"shots": [0,0], "passes": [0,0], "tackles": [0,0]}
 	for p in players: p.stamina = 1.0
 	controlled = players[4]
@@ -198,8 +207,13 @@ func new_match() -> void:
 func toggle_pause() -> void:
 	if phase in ["playing","foul","out","restart","set_piece","celebrate"]:
 		paused_from = phase; paused_ball_frozen = ball.freeze
+		# Freezing a rigid body discards its motion; the ball must resume its flight.
+		paused_ball_velocity = ball.linear_velocity; paused_ball_spin = ball.angular_velocity
 		phase = "paused"; ball.freeze = true; controlled.cancel_charge()
-	elif phase == "paused": phase = paused_from; ball.freeze = paused_ball_frozen
+	elif phase == "paused":
+		phase = paused_from; ball.freeze = paused_ball_frozen
+		if not paused_ball_frozen:
+			ball.linear_velocity = paused_ball_velocity; ball.angular_velocity = paused_ball_spin
 
 func _physics_process(delta: float) -> void:
 	ball_speed_before_step = ball.linear_velocity.length()
@@ -267,7 +281,7 @@ func _create_ball() -> void:
 			var dark := pow((cell-.5)*2, 2) + pow((vy-.5)*2, 2) < .37 and (int(u*8) + row) % 3 == 0
 			image.set_pixel(x, y, Color("273d39") if dark else Color("fff3d4"))
 	skin.albedo_texture = ImageTexture.create_from_image(image); visual.material_override = skin
-	ball.add_child(visual); ball.position = Vector3(0, .25, 0)
+	ball.add_child(visual); ball_visual = visual; ball.position = Vector3(0, .25, 0)
 	add_child(ball)
 	ball.body_entered.connect(_ball_contact)
 
@@ -301,7 +315,7 @@ func _ball_contact(body: Node) -> void:
 		juice.shot_post(ball.global_position)
 	if body in players:
 		if body.stun > 0: return
-		last_touch = body.team
+		last_touch = body.team; last_touch_player = body
 		if carrier != null and carrier.team != body.team and ball.linear_velocity.length() > 6.5: _drop_carrier()
 		if live() and carrier == null and kick_lock <= 0 and ball.position.y < .95 and _can_grab(body):
 			take_possession(body)
@@ -337,7 +351,7 @@ func take_possession(p) -> void:
 		juice.ball_fx.contact("trap",ball.global_position,minf(ball.linear_velocity.length()/24,.65))
 	recent_shot_time = 0
 	_drop_carrier()
-	carrier = p; last_touch = p.team; kick_lock = 0
+	carrier = p; last_touch = p.team; last_touch_player = p; kick_lock = 0
 	ball.add_collision_exception_with(p)
 	# A first-touch impulse cushions the incoming ball, without parenting or teleporting it.
 	var body_velocity: Vector3 = p.velocity; body_velocity.y = 0
@@ -365,7 +379,9 @@ func _possession(delta: float) -> void:
 			var d := flat_distance(p.position, ball.position)
 			if d > (1.6 if p == receiving_player else 1.4): continue
 			var relative: Vector3 = ball.linear_velocity-p.velocity; relative.y = 0
-			if relative.length() > 29: continue
+			var reception_quality: float = p.attribute_scale(p.tecnica,.85,1.10)
+			if p == receiving_player and receiving_from != null: reception_quality *= receiving_from.attribute_scale(receiving_from.passe,.95,1.04)
+			if relative.length() > 29*reception_quality: continue
 			var towards_player: Vector3 = p.position-ball.position; towards_player.y = 0
 			if relative.length() > 4 and towards_player.dot(relative) < -.5: continue
 			var score_value: float = d - (.12 if p == receiving_player else 0)
@@ -382,7 +398,7 @@ func _possession(delta: float) -> void:
 		if not obstruction.is_empty():
 			target = obstruction.position - carrier.facing*(BALL_RADIUS+.12)
 		var error := target - ball.position; error.y = 0
-		var wanted := body_velocity + error * 11
+		var wanted: Vector3 = body_velocity + error * 11*carrier.attribute_scale(carrier.tecnica,.80,1.15)
 		var correction := wanted - Vector3(ball.linear_velocity.x, 0, ball.linear_velocity.z)
 		ball.apply_central_force(correction.limit_length(24) * ball.mass * 24)
 		if ball.position.y > .4: ball.apply_central_force(Vector3.DOWN*ball.mass*12)
@@ -590,7 +606,7 @@ func reception_command(p, human_move := Vector3.ZERO, human := false) -> Diction
 		for i in range(1,31):
 			var t := i*.04
 			var prediction := ball.position + velocity*((1.0-exp(-.55*t))/.55)
-			if flat_distance(p.position,prediction) <= 5.8*t+.55:
+			if flat_distance(p.position,prediction) <= p.movement_speed(true)*.784*t+.55:
 				target = prediction; break
 	target.x = clampf(target.x,-24,24); target.z = clampf(target.z,-14,14)
 	var offset: Vector3 = target-p.position; offset.y = 0
@@ -616,7 +632,7 @@ func strike(p, target: Vector3, kind: String, power: float) -> void:
 		if receiving_from != p or receiving_player == null: prepare_reception(p,target)
 	else: clear_reception()
 	var receiver = receiving_player if kind == "pass" else null
-	var speed := lerpf(15, 26, power) if kind == "shot" else clampf(16+flat_distance(ball.position, target)*.24, 18, 24)
+	var speed: float = p.shot_speed(power) if kind == "shot" else p.pass_speed(flat_distance(ball.position,target))
 	var vertical_speed := .35
 	if kind == "shot":
 		# Mouse aim chooses the horizontal heading; charge sets a ballistic arc.
@@ -633,7 +649,7 @@ func strike(p, target: Vector3, kind: String, power: float) -> void:
 		ball.apply_torque_impulse((rolling_spin-ball.angular_velocity) * (.4*ball.mass*BALL_RADIUS*BALL_RADIUS))
 	else: ball.apply_torque_impulse(Vector3(direction.z, 0, -direction.x) * .08)
 	released_by = p; release_guard = .32
-	_drop_carrier(); kick_lock = 0; last_touch = p.team
+	_drop_carrier(); kick_lock = 0; last_touch = p.team; last_touch_player = p
 	if receiver != null:
 		receiving_flight = true
 		receiving_time = clampf(flat_distance(ball.position,receiver.position)/speed*1.5+.9,1.0,3.0)
@@ -750,11 +766,25 @@ func goal(team: int) -> void:
 	if not live(): return
 	restart_taker = null; pending_restart.clear()
 	score[team] += 1; last_goal_team = team; phase = "celebrate"; phase_timer = GOAL_DURATION
+	last_goal_scorer = _credit_goal(team)
 	_drop_carrier(); clear_reception(); controlled.cancel_charge()
 	message = "GOOOL!  " + team_label(team).to_upper()
 	message_timer = 0; goal_reveal_pending = true; goal_hold_elapsed = -1; goal_net_wait = 0
 	hud.clear_reactions(); hud.goal_team = -1; hud.goal_age = 0
 	juice.shot_goal(); juice.impact("goal",ball.global_position,1)
+
+func _credit_goal(team: int):
+	# An own goal has no scorer on the winning side; the attacker celebrates for the team.
+	var scorer = last_touch_player
+	if scorer == null or scorer.team != team: return players[team*5+4]
+	goals_by_player[scorer] = goals_by_player.get(scorer,0)+1
+	return scorer
+
+func top_scorer(team: int):
+	var best = players[team*5+4]; var most := 0
+	for p in goals_by_player:
+		if p.team == team and goals_by_player[p] > most: best = p; most = goals_by_player[p]
+	return best
 
 func _advance_goal_reveal(real_delta: float) -> void:
 	if phase == "paused": return

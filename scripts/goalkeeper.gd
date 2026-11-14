@@ -126,7 +126,7 @@ func change(next: State) -> void:
 func reaction_seconds() -> float:
 	# Retain the fastest observed shot speed so air drag cannot erase the delay.
 	var strength := clampf(inverse_lerp(POWER_REACTION_START_SPEED,POWER_REACTION_FULL_SPEED,threat_speed),0,1)
-	return REACTION_SECONDS+POWER_REACTION_EXTRA_SECONDS*strength*strength
+	return REACTION_SECONDS/player.attribute_scale(player.reflexos,.80,1.12)+POWER_REACTION_EXTRA_SECONDS*strength*strength
 
 func predict_plane(plane_x: float) -> Dictionary:
 	return _predict_plane(Vector3(plane_x,0,0),Vector3(attack(),0,0))

@@ -61,7 +61,7 @@ func advance(real_delta: float, paused := false) -> void:
 	elif age > MAX_FLIGHT_SECONDS and not scored and stage not in ["post","return"]: release()
 	if active:
 		var slow := stage in ["shot","post","net"] and stage_age < SLOW_SECONDS
-		Engine.time_scale = previous_time_scale*(SLOW_SCALE if slow else 1.0)
+		HIT_STOP.set_world_scale(previous_time_scale*(SLOW_SCALE if slow else 1.0))
 
 func observe(ball: Vector3, velocity: Vector3, possessed: bool, phase: String) -> void:
 	if not active or phase == "paused": return
@@ -94,7 +94,7 @@ func goal_scored(ball: Vector3, camera_view: Transform3D, fov: float) -> void:
 	# An immediate post -> goal preserves the woodwork shot until actual net contact.
 	if stage not in ["shot","post","net","net_hold"]:
 		view = camera_view; view_fov = fov; _enter("goal_wait",ball)
-		Engine.time_scale = previous_time_scale
+		HIT_STOP.set_world_scale(previous_time_scale)
 
 func net_impact(point: Vector3, camera_view: Transform3D, fov: float) -> bool:
 	if not active or not scored or net_seen: return false
@@ -106,7 +106,7 @@ func net_impact(point: Vector3, camera_view: Transform3D, fov: float) -> bool:
 
 func release() -> void:
 	if not active or stage == "return": return
-	Engine.time_scale = previous_time_scale; _enter("return",last_ball)
+	HIT_STOP.set_world_scale(previous_time_scale); _enter("return",last_ball)
 
 func cancel() -> void:
 	super.cancel(); stage = "idle"; stage_age = 0; scored = false; net_seen = false; post_seen = false
